@@ -27,4 +27,34 @@ You can combine the outputs of these two models and rank posts by their combined
 𝛼 quality_score + 𝛽 engagement_score
 
 
+### Data Systems
+
+**Data Sources**
+
+- User input data
+- System-generated data
+- Internal DBs
+- Third party data
+
+**Data Models**
+
+- Relational Models
+- NoSQL Models
+  - Document Model
+  - Graph Model
+
+**Data Storage Engines and Processing**
+
+Two types of workloads that databases are optimized for: 
+- Transactional processing
+  - A transaction refers to any kind of actions that happen online: tweeting, ordering a ride through ridesharing service, uploading a new model, watching a YouTube video, etc.
+  - OnLine Transaction Processing (OLTP) - need to be processed fast (low latency).
+- Analytical processing
+  - OnLine Analytical Processing (OLAP) - requires aggregating data in columns across multiple rows of data.
+
+**Stream Processing**
+
+### Training Data
+
+
 
