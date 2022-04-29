@@ -78,7 +78,19 @@ When the selection of data isn't based on any probability criteria.
 
 Useful when dealing with incoming stream of data.
 
-#### Labeling
+### 4. Labeling
+
+**Hand Labeling**
+
+- Label Multiplicity
+- Data Lineage
+
+**Handling the Lack of Hand Labels**
+
+- Weak Supervision
+- Semi-supervision
+- Transfer Learning
+- Active Learning
 
 
 
