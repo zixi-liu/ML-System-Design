@@ -1,6 +1,6 @@
 ## ML System Fundamentals
 
-### Framing ML Problems
+### 1. Framing ML Problems
 
 **Use Case to Decouple Objectives**
 
@@ -27,7 +27,7 @@ You can combine the outputs of these two models and rank posts by their combined
 𝛼 quality_score + 𝛽 engagement_score
 
 
-### Data Systems
+### 2. Data Systems
 
 **Data Sources**
 
@@ -54,7 +54,31 @@ Two types of workloads that databases are optimized for:
 
 **Stream Processing**
 
-### Training Data
+### 3. Training Data
+
+#### Sampling
+
+**Non-Probability Sampling**
+
+When the selection of data isn't based on any probability criteria.
+- Convenience sampling: sample data based on availability.
+- Snowball sampling: future samples are selected based on existing samples.
+- Judgment sampling: expert decide what samples to include.
+- Quota sampling: select samples based on quotas for certain slices of data without any randomization.
+
+**Simple Random Sampling**
+
+**Stratified Sampling**
+
+**Weighted Sampling**
+
+**Importance Sampling**
+
+**Reservoir Sampling**
+
+Useful when dealing with incoming stream of data.
+
+#### Labeling
 
 
 
