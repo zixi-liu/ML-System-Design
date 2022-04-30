@@ -1,9 +1,9 @@
 ## ML System Fundamentals
 
-[1. Framing ML Problems](#1-Framing-ML-Problems)
-[2. Data Systems](#2-Data-Systems)
-[3. Training Data](#3-Training-Data)
-[4. Feature Engineering](#4-Feature-Engineering)
+  [1. Framing ML Problems](#1-Framing-ML-Problems)
+  [2. Data Systems](#2-Data-Systems)
+  [3. Training Data](#3-Training-Data)
+  [4. Feature Engineering](#4-Feature-Engineering)
 
 
 ### 1 Framing ML Problems
