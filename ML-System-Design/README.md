@@ -78,7 +78,7 @@ When the selection of data isn't based on any probability criteria.
 
 Useful when dealing with incoming stream of data.
 
-### 4. Labeling
+#### Labeling
 
 **Hand Labeling**
 
@@ -92,8 +92,25 @@ Useful when dealing with incoming stream of data.
 - [[Semi-supervision]](https://pages.cs.wisc.edu/~jerryzhu/pub/ssl_survey.pdf)
   - Assumes that data samples that share similar characteristics share the same labels. 
 - Transfer Learning
-  - h
+  - A model developed for a task is reused as the starting point for a model on a second task.
 - Active Learning
+  - The most straightforward heuristic is uncertainty measurement — label the examples that your model is the least certain about hoping that they will help your model learn the decision boundary better. 
+  - Another common heuristic is based on disagreement among multiple candidate models.
 
+#### Class Imbalance
 
+CLass imbalance make learning difficult for the following reasons:
+- Insufficient signal for your model to learn to detect the minority classes.
+- Get stuck in a non-optimal solution by learning a simple heuristic instead of learning useful about the underlying structure of the data.
+- Aymmetric costs of error - the cost of wrong prediction on an example of the rare class might be much higher than a wrong prediction on an example of the majority class.
 
+Classical examples of tasks with class imbalance: fraud detection, churn prediction, disease screening, resume screening etc.
+
+**Handling Class Imbalance**
+
+- Using the right evaluation metrics
+- Resampling data
+- Algorithm-level methods
+  - Cost-sensitive learning: individual loss function is modified to take into account this varying cost.
+  - Class-balanced loss: make the weight of each class inversely proportional to the number of samples in that class, so that the rarer classes have higher weights.
+  - Focal loss: adjust the loss so that if a sample has a lower probability of being right, it’ll have a higher weight.
