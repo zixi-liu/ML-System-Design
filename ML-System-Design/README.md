@@ -125,8 +125,35 @@ Classical examples of tasks with class imbalance: fraud detection, churn predict
 
 #### Data Augmentation
 
+- Simple Label-Preserving Transformations 
+- Perturbation
+  - Adding noisy samples to our training data can help our models recognize the weak spots in their learned decision boundary and improve their performance. 
+  - Adversarial augmentation is less common in NLP, but perturbation has been used to make models more robust. One of the most notable examples is BERT.
+- Data Synthesis
+  - Used templates to bootstrap training data.
+
 #### Learned Features vs. Engineered Features
 
+- For domain-specific tasks such as predicting whether a transaction is fraudulent, you might need subject matter expertise with banking and frauds to be able to extract useful features.
+
 #### Common Feature Engineering Operations
+
+**Handling Missing Values**
+- Deletion
+- Imputation
+
+**Scaling**
+
+**Discretization**
+
+**Encoding Categorical Features**
+- Hashing
+
+**Feature Crossing**
+- Combine two or more features to generate new features.
+  - DeepFM and xDeepFM are the family of models that have successfully leverage explicit feature interactions for recommendation systems and click-through-rate prediction tasks.
+
+**Discrete and Continuous Positional Embeddings**
+
 
 
