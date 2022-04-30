@@ -88,8 +88,11 @@ Useful when dealing with incoming stream of data.
 **Handling the Lack of Hand Labels**
 
 - Weak Supervision
-- Semi-supervision
+  - Labeling Function (LF) can encode heuristics: keyword heuristic, regular expressions, database lookup, outputs of other models etc.
+- [Semi-supervision](https://pages.cs.wisc.edu/~jerryzhu/pub/ssl_survey.pdf)
+  - Assumes that data samples that share similar characteristics share the same labels. 
 - Transfer Learning
+  - 
 - Active Learning
 
 
