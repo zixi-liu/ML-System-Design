@@ -1,6 +1,12 @@
 ## ML System Fundamentals
 
-### 1. Framing ML Problems
+- [1. Framing ML Problems](#1-Framing-ML-Problems)
+- [2. Data Systems](#2-Data-Systems)
+- [3. Training Data](#3-Training-Data)
+
+
+
+### 1 Framing ML Problems
 
 **Use Case to Decouple Objectives**
 
@@ -27,7 +33,7 @@ You can combine the outputs of these two models and rank posts by their combined
 𝛼 quality_score + 𝛽 engagement_score
 
 
-### 2. Data Systems
+### 2 Data Systems
 
 **Data Sources**
 
