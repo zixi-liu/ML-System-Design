@@ -9,3 +9,7 @@ Learning Notes from System Design and Algorithm Lecture Series.
 6. Evaluation
 7. Interpetations & Insights
 8. Batch Prediction, Model Monitoring and Maintenance
+
+## Resources
+
+- [**Stanford CS 329S: Machine Learning Systems Design**](https://stanford-cs329s.github.io/syllabus.html)
