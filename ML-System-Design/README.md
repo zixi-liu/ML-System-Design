@@ -92,7 +92,7 @@ Useful when dealing with incoming stream of data.
 - [[Semi-supervision]](https://pages.cs.wisc.edu/~jerryzhu/pub/ssl_survey.pdf)
   - Assumes that data samples that share similar characteristics share the same labels. 
 - Transfer Learning
-  - 
+  - h
 - Active Learning
 
 
