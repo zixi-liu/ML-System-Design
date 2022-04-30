@@ -1,9 +1,9 @@
 ## ML System Fundamentals
 
-- [1. Framing ML Problems](#1-Framing-ML-Problems)
-- [2. Data Systems](#2-Data-Systems)
-- [3. Training Data](#3-Training-Data)
-
+[1. Framing ML Problems](#1-Framing-ML-Problems)
+[2. Data Systems](#2-Data-Systems)
+[3. Training Data](#3-Training-Data)
+[4. Feature Engineering](#4-Feature-Engineering)
 
 
 ### 1 Framing ML Problems
@@ -60,7 +60,7 @@ Two types of workloads that databases are optimized for:
 
 **Stream Processing**
 
-### 3. Training Data
+### 3 Training Data
 
 #### Sampling
 
@@ -120,3 +120,5 @@ Classical examples of tasks with class imbalance: fraud detection, churn predict
   - Cost-sensitive learning: individual loss function is modified to take into account this varying cost.
   - Class-balanced loss: make the weight of each class inversely proportional to the number of samples in that class, so that the rarer classes have higher weights.
   - Focal loss: adjust the loss so that if a sample has a lower probability of being right, it’ll have a higher weight.
+
+### 4 Feature Engineering
