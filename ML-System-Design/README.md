@@ -122,3 +122,11 @@ Classical examples of tasks with class imbalance: fraud detection, churn predict
   - Focal loss: adjust the loss so that if a sample has a lower probability of being right, it’ll have a higher weight.
 
 ### 4 Feature Engineering
+
+#### Data Augmentation
+
+#### Learned Features vs. Engineered Features
+
+#### Common Feature Engineering Operations
+
+
