@@ -1,10 +1,10 @@
-## ML System Fundamentals
+## CS 329S: ML System Fundamentals 
 
 - [1. Framing ML Problems](#1-Framing-ML-Problems) 
 - [2. Data Systems](#2-Data-Systems)
 - [3. Training Data](#3-Training-Data)
 - [4. Feature Engineering](#4-Feature-Engineering)
-
+- [5. Model Development and Training](#5-Model-Development-and-Training)
 
 ### 1 Framing ML Problems
 
@@ -155,5 +155,41 @@ Classical examples of tasks with class imbalance: fraud detection, churn predict
 
 **Discrete and Continuous Positional Embeddings**
 
+### 5 Model Development and Training
+
+**Evaluating ML Models**
+
+Even though deep learning is finding more use cases in production, classical ML algorithms are not going away. Many recommendation systems still rely on collaborative filtering and matrix factorization. Tree-based algorithms, including gradient-boosted trees, still power many classification tasks with strict latency requirements.
+
+When considering what model to use, it’s important to consider not only the model’s performance, measured by metrics such as accuracy, F1 score, log loss, but also its other properties such as how much data it needs to run, how much compute and time it needs to both train and do inference, and interpretability.
+
+**Tips for Model Selection**
+- Avoid the state-of-the-art (SOTA) trap
+- Start with the simplest models
+- Avoid human biases in selecting models
+- Evaluate good performance now vs. good performance later
+
+**Evaluate trade-offs**
+- False positives and false negatives tradeoff
+- Compute requirement and accuracy
+
+**Understanding model's assumptions**
+
+**Ensembles**
+- Each model in the ensemble is called a base learner. 
+- Ensembling methods are less favored in production because ensembles are more complex to deploy and harder to maintain. However, they are still common for tasks where a small performance boost can lead to a huge financial gain such as predicting click-through rate (CTR) for ads.
+
+**Bagging**
+
+**Boosting**
+
+**Stacking**
+
+**Experiment Tracking and Versioning**
+- Keep track of all the definitions needed to recreate an experiment and its relevant artifacts.
+  - An artifact is a file generated during an experiment — examples of artifacts can be files that show the loss curve, evaluation loss graph, logs, or intermediate results of a model throughout a training process.
+- The process of tracking the progress and results of an experiment is called experiment tracking. 
+  - 
+- The process of logging all the details of an experiment for the purpose of possibly recreating it later or comparing it with other experiments is called versioning. 
 
 
