@@ -5,6 +5,7 @@
 - [3. Training Data](#3-Training-Data)
 - [4. Feature Engineering](#4-Feature-Engineering)
 - [5. Model Development and Training](#5-Model-Development-and-Training)
+- [6. Model Offline Evaluation](#6-Model-Offline-Evaluation)
 
 ### 1 Framing ML Problems
 
@@ -188,8 +189,50 @@ When considering what model to use, it’s important to consider not only the mo
 **Experiment Tracking and Versioning**
 - Keep track of all the definitions needed to recreate an experiment and its relevant artifacts.
   - An artifact is a file generated during an experiment — examples of artifacts can be files that show the loss curve, evaluation loss graph, logs, or intermediate results of a model throughout a training process.
-- The process of tracking the progress and results of an experiment is called experiment tracking. 
-  - 
-- The process of logging all the details of an experiment for the purpose of possibly recreating it later or comparing it with other experiments is called versioning. 
+- The process of tracking the progress and results of an experiment is called **experiment tracking**. 
+  - Loss curve corresponding to training split and eval splits.
+  - Model performance metrics i.e. accuracy, F1, perplexity.
+  - Speed of model, evaluated by number of steps per second (i.e. number of tokens processed per second etc.)
+  - System performance metrics such as memory usage and CPU/GPU utilization.
+  - Hyperparameter tuning, such as learning rate or clipping gradient norms.
+- The process of logging all the details of an experiment for the purpose of possibly recreating it later or comparing it with other experiments is called **versioning**. 
 
+**Debugging ML Models**
+- [[Training Neural Nets]](http://karpathy.github.io/2019/04/25/recipe/)
+
+**AutoML**
+
+**Soft AutoML: Hyperparameter tuning**
+
+**Hard AutoML: Architecture search and learned optimizer**
+- Architectual search, or neural architecture search (NAS) for neural networks, as it searches for the optimal model architecture.
+  - search space that defines possible neural networks
+  - performance estimation strategy to evaluate performance of candidate architecture
+  - search strategy to explore the search space i.e. random search, reinforcement learning, and evolution etc.
+
+### 6 Model Offline Evaluation
+
+**Distributed Training**
+- Data Parallelism
+  - Asynchronous stochastic gradient descent (ASGD) vs Synchronous stochastic gradient descent (SSGD)
+
+**Model Offline Evaluation**
+
+- Baselines
+  - Random baseline
+  - Simple heuristic
+  - Zero rule baseline
+  - Human baseline
+  - Existing solutions
+- Evaluation Methods
+  - Pertubation tests
+  - Invariance tests
+  - Directional expectation tests
+- Model Calibration
+  - Platt scaling
+- Confidence Measurement
+- Slice-based Evaluation
+  - Heuristics-based
+  - Error analysis
+  - Slice finder
 
