@@ -6,6 +6,8 @@
 - [4. Feature Engineering](#4-Feature-Engineering)
 - [5. Model Development and Training](#5-Model-Development-and-Training)
 - [6. Model Offline Evaluation](#6-Model-Offline-Evaluation)
+- [7. Model Deployment](#7-Model-Deployment)
+- [8. Data Distribution Shifts and Monitoring](#8-Data-Distribution-Shifts-and-Monitoring)
 
 ### 1 Framing ML Problems
 
@@ -236,3 +238,44 @@ When considering what model to use, it’s important to consider not only the mo
   - Error analysis
   - Slice finder
 
+[[MLOps]](https://madewithml.com/#mlops)
+
+
+### 7 Model Deployment
+
+**Batch Prediction vs. Online Prediction**
+- Online prediction: on-demand prediction, when doing online prediction, requests are sent to the prediction service via RESTful APIs.
+  - Require a (near) real-time pipeline that can work with incoming data, extract streaming features, return prediction in near real-time.
+  - Fast-inference model that can generate predictions at a speed acceptable to its end users.
+- Batch prediction: predictions are generated periodically or whatever triggered. 
+  - Reduce the inference latency of more complex models. i.e. recommendation systems.
+
+Features
+- Batch features
+- Streaming features
+
+**Unifying Batch Pipelilne and Streaming Pipeline**
+- Unifying batch and stream processing pipelines with Flink
+
+[**Model Compression**](https://arxiv.org/abs/1710.09282)
+
+3 main approaches to reduce inference latency: make it do inference faster, make the model smaller, or make the hardware it’s deployed on run faster.
+
+The process of making a model smaller is called model compression, and the process to make it do inference faster is called inference optimization.
+
+- Low-rank Factorization
+- Knowledge Distillation
+- Pruning
+- Quantization
+
+**ML on the Cloud and on the Edge**
+
+Edge computing 
+
+### 8 Data Distribution Shifts and Monitoring
+
+**Natural Labels and Feedback Loop**
+
+No matter how long you set your window length to be, there might still be premature negative labels. For tasks with long feedback loops, natural labels might not arrive for weeks or even months. Fraud detection is an example of a task with long feedback loops.
+
+**Causes of ML System Failures**
