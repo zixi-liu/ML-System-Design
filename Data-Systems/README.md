@@ -1,5 +1,5 @@
 
-## Designing Data-Intensive Applications
+# Designing Data-Intensive Applications
 
 - [1. Reliable, Scalable, and Maintainable Applications](#1-Reliable-Scalable-and-Maintainable-Applications) 
 - [2. Data Models and Query Languages](#2-Data-Models-and-Query-Languages) 
