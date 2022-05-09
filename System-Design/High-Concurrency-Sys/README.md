@@ -1,6 +1,6 @@
 ## 高并发系统架构学习笔记
 
-[作者](https://time.geekbang.org/column/intro/100105701）
+[Author](https://time.geekbang.org/column/intro/100105701）
 ### 高并发架构设计方法
 服务系统随着并发的增加从而拓展系统的各个方面来消除性能瓶颈。
 
