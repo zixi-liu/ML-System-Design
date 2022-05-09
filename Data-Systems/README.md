@@ -1,9 +1,13 @@
 
 # Designing Data-Intensive Applications
 
+### I. Foundations of Data Systems
 - [1. Reliable, Scalable, and Maintainable Applications](#1-Reliable-Scalable-and-Maintainable-Applications) 
 - [2. Data Models and Query Languages](#2-Data-Models-and-Query-Languages) 
 - [3. Storage and Retrieval](#3-Storage-and-Retrieval)
+### II. Distributed Data
+- [5. Replication](#5-Replication)
+
 
 ### 1 Reliable Scalable and Maintainable Applications
 
@@ -136,3 +140,30 @@ On the OLTP side, we saw storage engines from two main schools of thought:
 - The update-in-place school, which treats the disk as a set of fixed-size pages that can be overwritten （i.e. B-trees).
 
 When queries require sequentially scanning across a large number of rows, indexes are much less relevant. Instead it becomes important to encode data very compactly, to minimize the amount of data that the query needs to read from disk (column-oriented storage helps achieve this goal).
+
+### 5 Replication
+
+**Replication Versus Partitioning**
+- *Replication:* Keeping a copy of the same data on several different nodes, potentially in different locations. Replication provides redundancy: if some nodes are unavailable, the data can still be served from the remaining nodes.
+- *Partitioning:* Splitting a big database into smaller subsets called partitions so that different partitions can be assigned to different nodes.
+
+**Leader-based replication**
+- When a client wants to read from the database, it can query either the leader or any of the followers. However, writes are only accepted on the leader.
+  - Distributed message brokers such as Kafka and RabbitMQ highly available queues also use leader-based replication.
+
+**Synchronous Versus Asynchronous Replication**
+
+Often, leader-based replication is configured to be completely asynchronous. In this case, if the leader fails and is not recoverable, any writes that have not yet been replicated to followers are lost. This means that a write is not guaranteed to be durable, even if it has been confirmed to the client. However, a fully asynchronous configuration has the advantage that the leader can continue processing writes, even if all of its followers have fallen behind.
+
+**Setting Up New Followers**
+- Take a consistent snapshot of the leader’s database and the follower requests all the data changes that have happened since the snapshot was taken.
+
+**Handling Node Outages**
+
+**Problems with Replication Lag**
+- read-after-write consistency
+- cross-device read-after-write consistency
+
+**Monotonic Reads**
+- One way of achieving monotonic reads is to make sure that each user always makes their reads from the same replica.
+  - For example, the replica can be chosen based on a hash of the user ID, rather than randomly.
