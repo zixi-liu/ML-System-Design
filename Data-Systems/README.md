@@ -181,3 +181,19 @@ Dynamo-style datastores
 - Two operations are concurrent if neither happens before the other.
 
 ### 6 Partitioning
+
+Goal is to spread the data and the query load evenly across nodes.
+
+**Partitioning by Key Range**
+
+**Partitioning by Hash of Key**
+
+Cassandra and MongoDB use MD5, and Voldemort uses the Fowler–Noll–Vo function. 
+
+Many programming languages have simple hash functions built in, but they may not be suitable for partitioning: for example, in Java’s Object.hashCode() and Ruby’s Object#hash, the same key may have a different hash value in different processes.
+
+**Consistent Hashing**
+
+**Skewed Workloads and Relieving Hot Spots**
+
+If one key is known to be very hot, a simple technique is to add a random number to the beginning or end of the key
