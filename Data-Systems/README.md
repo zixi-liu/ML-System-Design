@@ -7,7 +7,7 @@
 - [3. Storage and Retrieval](#3-Storage-and-Retrieval)
 ### II. Distributed Data
 - [5. Replication](#5-Replication)
-
+- [6. Partitioning](#6-Partitioning)
 
 ### 1 Reliable Scalable and Maintainable Applications
 
@@ -167,3 +167,17 @@ Often, leader-based replication is configured to be completely asynchronous. In 
 **Monotonic Reads**
 - One way of achieving monotonic reads is to make sure that each user always makes their reads from the same replica.
   - For example, the replica can be chosen based on a hash of the user ID, rather than randomly.
+
+**Multi-Leader Replication**
+
+**Leaderless Replication**
+
+Dynamo-style datastores
+- Read repair: When a client makes a read from several nodes in parallel, it can detect any stale responses.
+- Anti-entropy process: some datastores have a background process that constantly looks for differences in the data between replicas and copies any missing data from one replica to another.
+
+**Detecting Concurrent Writes**
+- "happens before": B is causally dependent on A.
+- Two operations are concurrent if neither happens before the other.
+
+### 6 Partitioning
