@@ -8,6 +8,9 @@
 ### II. Distributed Data
 - [5. Replication](#5-Replication)
 - [6. Partitioning](#6-Partitioning)
+- [7. Transactions](#7-Transactions)
+### III. Derived Data
+- [10. Batch Processing](#Batch-Processing)
 
 ### 1 Reliable Scalable and Maintainable Applications
 
@@ -223,3 +226,22 @@ registers itself in ZooKeeper, and ZooKeeper maintains the authoritative mapping
 
 **Parallel Query Execution**
 - Massively parallel processing (MPP)
+
+### 7 Transactions
+
+### 10 Batch Processing
+
+**MapReduce and Distributed Filesystems**
+
+MapReduce jobs read and write files on a distributed filesystem. In Hadoop’s implementation of Map‐Reduce, that filesystem is called HDFS (Hadoop Distributed File System).
+
+**MapReduce Job Execution**
+
+To create a MapReduce job, you need to implement two callback functions, the mapper and reducer,
+
+- Mapper
+  - The mapper is called once for every input record, and its job is to extract the key and value from the input record. For each input, it may generate any number of key-value pairs (including none).
+- Reducer
+  - The MapReduce framework takes the key-value pairs produced by the mappers, collects all the values belonging to the same key, and calls the reducer with an iterator over that collection of values.
+
+**Distributed execution of MapReduce**
