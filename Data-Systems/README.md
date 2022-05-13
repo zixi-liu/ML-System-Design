@@ -118,7 +118,7 @@ Two families of storage engines:
 
 **Data Warehouse**
 
-<img width="600" alt="image" src="https://user-images.githubusercontent.com/46979228/167333099-0d53461b-7ca1-4cb0-b2f2-e0e1068293ce.png">
+<img width="800" alt="image" src="https://user-images.githubusercontent.com/46979228/167333099-0d53461b-7ca1-4cb0-b2f2-e0e1068293ce.png">
 
 - OLTP systems are usually expected to be highly available and to process transactions with low latency.
 
@@ -196,4 +196,30 @@ Many programming languages have simple hash functions built in, but they may not
 
 **Skewed Workloads and Relieving Hot Spots**
 
-If one key is known to be very hot, a simple technique is to add a random number to the beginning or end of the key
+If one key is known to be very hot, a simple technique is to add a random number to the beginning or end of the key.
+
+**Partitioning and Secondary Indexes**
+
+- Document-based partitioning 
+  - scatter/gather
+- Term-based partitioning
+  - advantage of a global (term-partitioned) index over a document-partitioned index is that it can make reads more efficient: rather than doing scatter/gather over all partitions, a client only needs to make a request to the partition containing the term that it wants. 
+  - downside of a global index is that writes are slower and more complicated, because a write to a single document may now affect multiple partitions of the index (every term in the document might be on a different partition, on a different node).
+
+**Rebalancing Partitions**
+
+Strategies for Rebalancing：
+- Not to do: hash mod N
+- Fixed number of partitions
+  - <img width="908" alt="image" src="https://user-images.githubusercontent.com/46979228/168338704-81eab611-caf8-44cc-8aad-62a1b08fa273.png">
+- Dynamic partitioning
+  - When a partition grows to exceed a configured size (on HBase, the default is 10 GB), it is split into two partitions so that approximately half
+of the data ends up on each side of the split. Conversely, if lots of data is deleted and a partition shrinks below some threshold, it can be merged with an adjacent partition.
+- Partitioning proportionally to nodes
+  - Request Routing
+  - <img width="931" alt="image" src="https://user-images.githubusercontent.com/46979228/168339138-dce4bc35-9494-4672-ae89-1d27cc978303.png">
+  - Many distributed data systems rely on a separate coordination service such as Zoo‐Keeper to keep track of this cluster metadata. Each node
+registers itself in ZooKeeper, and ZooKeeper maintains the authoritative mapping of partitions to nodes. 
+
+**Parallel Query Execution**
+- Massively parallel processing (MPP)
