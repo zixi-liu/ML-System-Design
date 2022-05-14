@@ -10,7 +10,7 @@
 - [6. Partitioning](#6-Partitioning)
 - [7. Transactions](#7-Transactions)
 ### III. Derived Data
-- [10. Batch Processing](#Batch-Processing)
+- [10. Batch Processing](#10-Batch-Processing)
 
 ### 1 Reliable Scalable and Maintainable Applications
 
