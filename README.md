@@ -16,5 +16,5 @@ Learning Notes from System Design and Algorithm Lecture Series.
 
 ## Resources
 
-- [**End-to-end MLOPs Architecture**](https://arxiv.org/pdf/2205.02302.pdf)
+- [**End-to-end ML OPs Architecture**](https://arxiv.org/pdf/2205.02302.pdf)
 - [**Stanford CS 329S: Machine Learning Systems Design**](https://stanford-cs329s.github.io/syllabus.html)
