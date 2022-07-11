@@ -10,6 +10,11 @@ Learning Notes from System Design and Algorithm Lecture Series.
 7. Interpetations & Insights
 8. Batch Prediction, Model Monitoring and Maintenance
 
+## Roadmap
+
+<img width="722" alt="image" src="https://user-images.githubusercontent.com/46979228/178323796-f23cfc46-e60c-42f6-97e7-f38da8983975.png">
+
 ## Resources
 
+- [End-to-end MLOPs Architecture](https://arxiv.org/pdf/2205.02302.pdf)
 - [**Stanford CS 329S: Machine Learning Systems Design**](https://stanford-cs329s.github.io/syllabus.html)
