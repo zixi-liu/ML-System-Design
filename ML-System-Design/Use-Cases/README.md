@@ -75,3 +75,24 @@ High-level System Design
 
 **Scale the Design**
 - In practice, we can also use Kube-proxy so the Candidate Generation Service can call Ranking Service directly, reducing latency even further.
+
+## Ad Click Prediction
+
+![image](https://user-images.githubusercontent.com/46979228/182065084-6e34ab58-5022-47fa-8674-f64d50634a3d.png)
+
+**Metrics Design**
+
+Offline metrics
+- Normalized Cross-Entropy (NCE): NCE is the predictive logloss divided by the cross-entropy of the background CTR. This way NCE is insensitive to background CTR. 
+
+Online metrics
+- Revenue Lift: Percentage of revenue changes over a period of time. 
+
+Inference
+- Serving: Low latency (50ms - 100ms) for ad prediction.
+- Latency: Ad requests go through a waterfall model, therefore, recommendation latency for ML model needs to be fast.
+- Overspent: If the ad serving model repeatedly serves the same ads, it might end up over-spending the campaign budget and publishers lose money.
+
+**High-level System Design**
+
+![image](https://user-images.githubusercontent.com/46979228/182065502-85244dc3-4e23-4876-b632-96e67810c0d1.png)
