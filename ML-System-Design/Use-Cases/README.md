@@ -96,3 +96,9 @@ Inference
 **High-level System Design**
 
 ![image](https://user-images.githubusercontent.com/46979228/182065502-85244dc3-4e23-4876-b632-96e67810c0d1.png)
+
+## Estimate Delivery Time
+
+![image](https://user-images.githubusercontent.com/46979228/182066117-523278ec-2a29-4dc6-894b-458c4921f612.png)
+
+DeliveryTime = PickupTime + Point_to_PointTime + Drop_off_Time
