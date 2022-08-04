@@ -12,6 +12,7 @@
 
 推荐系统主流模型
 - [推荐系统工程应用系列2---主流算法与模型](https://zhuanlan.zhihu.com/p/420681378)
+- [推荐系统通用用户表征预训练研究进展](https://mp.weixin.qq.com/s/8MlELBKvBbr7rvYTAdXqEQ)
 - [Bias and Debias in Recommender System: A Survey and Future Directions](https://arxiv.org/pdf/2010.03240.pdf)
 
 ### Industry Cases 
