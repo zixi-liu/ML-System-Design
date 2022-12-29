@@ -19,5 +19,5 @@
 - [[Youtube 2019] Recommending What Video to Watch Next: A Multitask Ranking System](https://daiwk.github.io/assets/youtube-multitask.pdf)
 - [[Tencent] 无量深度学习系统在腾讯推荐业务的应用](https://mp.weixin.qq.com/s/FNQ2jocMZNXp_euEPqLUEw)
 - [[Tiktok RecSys] 抖音推荐系统演进历程](https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&mid=2651093914&idx=1&sn=1db40c41a66261ab3cf91789b5d67b09&chksm=bdb983c98ace0adf27e1bebe3415347d36b917916580e5bd4522496da88260e3dc852ff6d3f2&scene=27#wechat_redirect)
-
+- [推荐系统从零单排系列(一)--DNN for YouTube Recommendations](https://zhuanlan.zhihu.com/p/51770520)
 
