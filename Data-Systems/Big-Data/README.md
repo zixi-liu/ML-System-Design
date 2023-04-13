@@ -32,3 +32,27 @@ Spark 通过把数据放在内存而不是硬盘里（数据缓存在内存）�
 - 以批代流
 - 数据传输
 
+## 大数据处理
+
+#### MapReduce
+
+<img width="581" alt="image" src="https://user-images.githubusercontent.com/46979228/231879985-7130f5c4-e59e-44b3-8560-8f47a774b455.png">
+
+2008 年以后，Google 改进了 MapReduce 的分片功能，引进了动态分片技术 (dynamic sharding），大大简化了使用者对于分片的手工调整。
+
+自动优化的需求：
+- 对数据处理进行高度抽象，去除冗余步骤。
+- 计算资源的自动弹性分配。
+
+数据处理的描述语言，与背后的运行引擎解耦合开来。
+
+统一批处理和流处理的编程模型。
+
+<img width="585" alt="image" src="https://user-images.githubusercontent.com/46979228/231882728-a56d5fa6-6979-44fd-9b48-789c31484dda.png">
+
+#### Top K算法当数据规模变大会遇到哪些问题
+
+- 内存占用。
+- 磁盘 I/O 等延时问题。
+
+#### 分布式系统
