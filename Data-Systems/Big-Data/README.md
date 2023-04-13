@@ -56,3 +56,9 @@ Spark 通过把数据放在内存而不是硬盘里（数据缓存在内存）�
 - 磁盘 I/O 等延时问题。
 
 #### 分布式系统
+
+Best Practices
+- 99.9% Availability是什么
+  - SLA（Service-Level Agreement）服务等级协议。最常见的四个 SLA 指标，可用性、准确性、系统容量和延迟。
+  - **可用性（Availabilty）**： 可用性指的是系统服务能正常运行所占的时间百分比。
+  - **准确性（Accuracy）**
