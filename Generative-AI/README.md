@@ -48,4 +48,27 @@ Temperature
 
 ![image](https://github.com/zixi-liu/ML-System-Design/assets/46979228/b75140c7-991d-4c73-9be4-c2aae4d1b72f)
 
+#### Model architectures and pre-training objectives
+
+**Autoencoding models**
+- Masked Language Modeling (MLM)
+  - Objective: Reconstruct text (denoising) with bidirectional context
+  - Use cases: sentiment analysis, named entity recognition, word classification
+
+**Autoregressive models**
+- Causal Language Modeling (CLM)
+  - Objective: Predict next token with undirectional context
+  - Use cases: text generation, other emergent behavior (depends on model size)
+ 
+**Sequence-to-sequence models**
+- Span corruption (sentinel token)
+- Reconstruct span
+  - Use cases: transalation, text summarization, question answering
+
+#### Computational Challenges
+
+- 1B parameters = 4 x 10^9 bytes = 4GB
+
+  
+ 
 
