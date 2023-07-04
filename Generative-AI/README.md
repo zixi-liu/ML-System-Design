@@ -69,6 +69,32 @@ Temperature
 
 - 1B parameters = 4 x 10^9 bytes = 4GB
 
-  
+Reducing Memmory
+- Quantization
+  - BFLOAT16
+
+**Efficient multi-GPU compute strategies**
+
+- Distributed Data Parallel (DDP)
+- Fully Sharded Data Paralel (FSDP)
+  - ZeRO (zero data overlap across GPUs, sharding parameters, gradients, and optimizer states
+
+**Scaling Laws**
+- Scaling choice
+  - Increase dataset size (number of tokens)
+  - Increase model size (number of parameters)
+
+1 "petaflop/s-day" = # floating point operations performed at rate of 1 petaFLOP per second for one day
+
+Very large models maybe over-parameterized and under-trained.
+
+**Pre-training for domain adaption**
+
+i.e. legal language, medical language, etc.
+
+BloombergGPT - a LLM for Finance
+
+### Week 2
+
  
 
