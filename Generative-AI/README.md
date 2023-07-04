@@ -96,5 +96,23 @@ BloombergGPT - a LLM for Finance
 
 ### Week 2
 
- 
+#### Instruction fine-tuning
+
+Fine-tuning is a supervised process using task-specific examples.
+- Prompt-completion pairs
+
+#### Fine-tuning on a single task
+
+**Catastrophic forgetting**
+- Fine-tuning can significantly increase the performance of a model on a specific task, but can lead to reduction in ability on other tasks.
+
+**How to avoid catastrophic forgetting**
+- Fine-tune on multiple tasks at the same time
+- Consider Parameter Efficient Fine-tuning (PEFT) - greater robustness
+
+**Multi-task, instruction fine-tuning**
+- Instruction fine-tuning with FLAN
+  - FLAN models refer to a specific set of instructions used to perform instruction fine-tuning.
+
+
 
