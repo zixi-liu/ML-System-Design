@@ -114,5 +114,52 @@ Fine-tuning is a supervised process using task-specific examples.
 - Instruction fine-tuning with FLAN
   - FLAN models refer to a specific set of instructions used to perform instruction fine-tuning.
 
+#### Model Evaluation
+
+LLM Evaluation
+- Accuracy
+- ROUGE
+  - Used for text summarization
+  - Compares a summary to one or more reference summaries
+  - ROUGE-1 Recall = unigram matches / unigrams in reference
+  - ROUGE-1 Precision = unigram matches / unigrams in output
+  - ROUGE-1 F1 = 2 precision x recall / precision + recall
+  - ROUGE-2 (using bigrams)
+  - ROUGE-L (longest common subsequence)
+- BLEU Score
+  - Used for text translation
+  - Compared to human-generated translations
+  - Avg(precision across range of n-gram sizes)
+
+#### Benchmarks
+
+#### Parameter efficient fine-tuning (PEFT)
+
+Selective
+- Select subset of initial LLM parameters to fine-tune
+
+Reparameterization
+- Reparameterize model weights using a low-rank representation (LoRA - Low-Rank Adpaptation of LLMs)
+
+Additive 
+- Add trainable layers or parameters to model (Adapters, Soft Prompts)
+
+#### LoRA
+
+- Freeze most of the original LLM weights.
+- Inject 2 rank decomposition matrices.
+- Train the weights of the smaller matrices.
+
+[**LoRA: Low-Rank Adaptation of Large Language Models 简读**](https://zhuanlan.zhihu.com/p/514033873)
+
+[**论文阅读：LORA-大型语言模型的低秩适应**](https://zhuanlan.zhihu.com/p/611557340)
+
+#### Soft Prompts
+
+- Prompt tuning
+  - Weights of model frozen and soft prompt trained
+  - Switch out soft prompt at inference time to change task
+
+
 
 
