@@ -196,6 +196,10 @@ Prepare labeled data for training
 #### Scaling Human Feedback
 
 **Constitutional AI**
+- Supervised Learning Stage
+  - Red Teaming
+  - Response, critique and revision
+
 
 
 
