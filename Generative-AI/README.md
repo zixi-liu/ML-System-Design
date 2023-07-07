@@ -160,6 +160,45 @@ Additive
   - Weights of model frozen and soft prompt trained
   - Switch out soft prompt at inference time to change task
 
+### Week 3
+
+#### Reinforcement Learning from Human Feedback (RLHF)
+
+**Reinforcement Learning**
+
+Maximize reward received for actions
+- Agent
+- Environment
+
+![image](https://github.com/zixi-liu/ML-System-Design/assets/46979228/aae96108-8029-41b1-9652-b8ad1c94bbf7)
+
+#### Obtaining feedback from humans
+
+- Definen your model alignment criterion
+- Obtain human feedback through labeler workforce
+
+Prepare labeled data for training
+- Convert rankings into pairwise training data for the reward model
+
+#### Reward Model
+
+#### Fine-tuning with reinforcement learning
+
+- Proximal Policy Optimization
+
+#### RLHF: Reward Hacking
+
+- Maintain a reference model and measure the KL Divergence Shift Penalty between reference model and RL-updated LLM.
+  - KL divergence penalty gets added to reward
+- Evaluate the human-aligned LLM
+  - Evaluate using toxicity score
+
+#### Scaling Human Feedback
+
+**Constitutional AI**
+
+
+
 
 
 
