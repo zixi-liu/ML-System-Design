@@ -200,9 +200,26 @@ Prepare labeled data for training
   - Red Teaming
   - Response, critique and revision
 
+#### Lab 
+The fine-tuning loop consists of the following main steps:
+- Get the query responses from the policy LLM (PEFT model).
+- Get sentiments for query/responses from hate speech RoBERTa model.
+- Optimize policy with PPO using the (query, response, reward) triplet.
 
+#### Model Optimization for Deployment
 
+**Distillation**
+- Teach model -> student model by using a distillation loss; Temperature;
 
+**Quantization**
+- Post-Training Quantization (PTQ)
+  - Reduce precision of model weights
 
+**Pruning**
+- Remove model weights with values close or equal to zero
+
+#### Generative AI Project Lifecycle Cheat Sheet
+
+![image](https://github.com/zixi-liu/ML-System-Design/assets/46979228/b35792cb-ab6e-4c02-b629-0ea3b5875cb8)
 
 
