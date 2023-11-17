@@ -11,5 +11,7 @@ The performance of a program depends on a combination of the effectiveness of th
 
 Compiler: A program that translates high-level language statements into assembly language statements.
 
+Assembler: A program that translates a symbolic version of instructions into the binary version.
+
 #### Resources:
 [Computer Organization and Design](https://www.cse.iitd.ac.in/~rijurekha/col216/edition5.pdf)
