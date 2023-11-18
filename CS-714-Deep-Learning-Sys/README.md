@@ -11,3 +11,6 @@ Covers concepts of modern deep learning systems like automatic differentiation, 
  - Loss function
  - Optimization method
 
+### Lecture 11 - Hardware Acceleration
+
+[Hardware Acceleration](https://dlsyscourse.org/slides/11-hardware-acceleration.pdf)
