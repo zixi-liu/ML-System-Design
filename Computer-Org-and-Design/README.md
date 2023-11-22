@@ -27,8 +27,7 @@ data, depending on what data it has
 
 ### Vector Architecture
 
-Th e basic philosophy of vector architecture is to collect data elements from memory, put them in order into a large set of registers, operate
-on them sequentially in registers using pipelined execution units, and then write
+Th e basic philosophy of vector architecture is to collect data elements from memory, put them in order into a large set of registers, operate on them sequentially in registers using pipelined execution units, and then write
 the results back to memory. A key feature of vector architectures is then a set of
 vector registers. Th us, a vector architecture might have 32 vector registers, each
 with 64 64-bit elements.
