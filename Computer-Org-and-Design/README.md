@@ -19,6 +19,19 @@ Assembler: A program that translates a symbolic version of instructions into the
 
 For example, a single SIMD instruction might add 64 numbers by sending 64 data streams to 64 ALUs to form 64 sums within a single clock cycle.
 
+SIMD works best when dealing with arrays in for loops. Hence, for parallelism
+to work in SIMD, there must be a great deal of identically structured data, which
+is called *data-level parallelism*. SIMD is at its weakest in case or switch
+statements, where each execution unit must perform a diff erent operation on its
+data, depending on what data it has
+
+### Vector Architecture
+
+Th e basic philosophy of vector architecture is to collect data elements from memory, put them in order into a large set of registers, operate
+on them sequentially in registers using pipelined execution units, and then write
+the results back to memory. A key feature of vector architectures is then a set of
+vector registers. Th us, a vector architecture might have 32 vector registers, each
+with 64 64-bit elements.
 
 #### Resources:
 - [Computer Organization and Design](https://www.cse.iitd.ac.in/~rijurekha/col216/edition5.pdf)
