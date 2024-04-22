@@ -30,4 +30,10 @@
     - Binning
       - Smoothing by bin mean/median/bin boundary
 
-5. 
+### Gradient Descent for Linear Regression
+
+- Loss Function
+  - Sum of squares error
+ 
+- Gradient Descent
+  - 
