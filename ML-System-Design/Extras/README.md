@@ -30,10 +30,20 @@
     - Binning
       - Smoothing by bin mean/median/bin boundary
 
-### Gradient Descent for Linear Regression
+### Gradient Descent 
+- Gradient Descent vs Stochastic Gradient Descent
+  - SGD randomly picks one data point from the whole data set at each iteration to reduce the computations.
+- Mini-batch gradient descent
+  
+### Logistic Regression
+
+- Sigmoid Function
+   - `1/(1+e^-x)` 
 
 - Loss Function
   - Sum of squares error
- 
-- Gradient Descent
-  - 
+  - Cross entropy
+
+### Decision Tree
+
+- CART: Regression Tree vs Classification Tree
