@@ -1,0 +1,85 @@
+
+[Deep Learning Bootcamp: Kaiming He](https://www.youtube.com/watch?v=D_jt-xO_RmI)
+
+**Deep Learning is Representation Learning**
+- build multiple levels of abstractions
+- learn by back-prop
+- learn from data
+- reduce domain knowledge and feature engineering
+
+**Learning Representations for Images**
+- LeNet[1989]
+  - translation-invariance
+  - Convolution = local connections + spatial weight-sharing
+    - fully connected / locally-connected / convolution
+  - Pooling
+    - sub-sampling: produce small feature map
+    - achieve local invariance (max/avg)
+    - more abstract representation
+  - step-by-step
+    - ![image](https://github.com/user-attachments/assets/f9eccda4-d6f5-4ff9-b2d1-3b4ea06b2bc9)
+- AlexNet[2012]
+  - Scaling up ConvNet
+    - Data scaling: ImageNet
+    - Model scaling
+    - Reduce overfitting: data augmentation, dropout
+    - GPU training: data distribution, model distribution
+  - Deeper
+  - ReLU activation (better gradient propagation to facilitate training deep model)
+  - Wider (richer set of features/more channels)
+  - Visualizations
+    - 1st layer is edge detector
+    - 2nd layer shows patterns of textures or local shapes
+    - 3rd layer shows semantics
+    - 4th layer shows shapes
+    - high-level representations are hard to design by hand
+- Deep representations are transferrable
+  - Transfer learning
+    - pre-train on large-scale data
+    - fine-tune on small-scale data
+    - enable DL on small datasets
+- VGG nets[2014]
+  - Very deep ConvNets
+  - Stage-wise training
+- Network initialization[2015]
+  - Difficulties of going deeper
+    - troubles accumulate in propagation
+    - exploding/vanishing gradients
+      - Xavier initialization: set the scaling factor as 1
+      - Kaiming initialization: 1/2 scale
+- GoogleNet[2014]
+  - Deep and economical ConvNets
+  - Motivate normalization methods
+- Normalization modules[2015]
+  - keep signals normalized throughout training for all layers
+  - ![image](https://github.com/user-attachments/assets/07cb7d10-a2ce-4eee-a5a1-3eca93317599)
+- ResNet[2015]
+  - Deep Residual Learning
+    - identify shortcut enable networks w/ hundreds of layers
+    - the degradation problem
+    - H(x) = F(x) + x
+    - encourage small changes
+- A checklist of training deep nets
+  - ReLU
+  - initialization
+  - normalization
+  - residual connection
+
+**Learning Representations for Sequences**
+- RNNs: full context, not feedforward
+  - DeepMind's WaveNet for Audio Generation[2016]
+    - causual conv w/ dilation
+- CNNs: limited context, feedforward
+- Attention: modeling long range reasoning
+  - every node can see every other node
+  - full context
+  - feedforward
+- Transformer[2017]
+  - attention is parameter-free
+  - parameter layers are all feed-forward
+  - LayerNorm + Residual connection
+  - GPT
+    - next word prediction
+- ViT[2020]
+  - sequences of image patches
+  - transformers on patches
