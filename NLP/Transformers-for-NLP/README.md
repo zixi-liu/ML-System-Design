@@ -24,12 +24,24 @@
 - Contextualized RNN with soft align (Attention)
   - "attention"操作的目的就是计算当前token与每个position之间的"相关度"，从而决定每个position的vector在最终该timestep的context中占的比重有多少。最终的context即encoder output每个位置vector表达的加权平均。
   - [transformer中的Q,K,V](https://www.zhihu.com/question/427629601)
-    - query对应的是需要被表达的序列(称为序列A)，key和value对应的是用来表达A的序列(称为序列B)。
+  - [一文看懂Attention](https://zhuanlan.zhihu.com/p/91839581)
+  - [遍地开花的 Attention](https://zhuanlan.zhihu.com/p/77307258)
+    - 计算区域
+      - Soft Attention：对所有key求权重概率，每个key都有一个对应的权重，是一种全局的计算方式。
+      - Hard Attention：精准定位到某个key，相当于这个key的概率是1，其余key的概率全部是0。
+      - Local Attention：对一个窗口区域进行计算。先用Hard方式定位到某个地方，以这个点为中心可以得到一个窗口区域，在这个小区域内用Soft方式来算Attention。
+    - 结构层次
+      - 单层Attention：用一个query对一段原文进行一次attention。
+      - 多层Attention：一般用于文本具有层次关系的模型。
+      - 多头Attention：用到了多个query对一段原文进行了多次attention，每个query都关注到原文的不同部分，相当于重复做多次单层attention。
+    - self attention: Q(Query), K(Key), V(Value)三个矩阵均来自同一输入.
     - multi-head self-attention: 词的representation有侧重点的包含其他词汇信息。
-    - encoder-decoder attention: 接下一个词时有focus的与源语言进行对比。
-    - self-attention: encoder中的self-attention的query, key, value都对应了源端序列(即A和B是同一序列)，decoder中的self-attention的query, key, value都对应了目标端序列。
-    - cross-attention: 
-
-
-
+    - cross-attention: 查询来自一个输入序列，而键和值来自另一个输入序列。
+- encoder中的attention都是self-attention，decoder则除了self-attention还有cross-attention。
+- [理解Attention:从起源到MHA,MQA和GQA](https://www.linsight.cn/3dc22f96.html#mha)
+- Transformer模型架构中的其他部分
+  - Layer Normalization: 加速模型的优化速度.
+  - Feed Forward Network: FFN的加入引入了非线性(ReLu激活函数).
+  - Positional Encoding
+    
 ### The encoder stack
