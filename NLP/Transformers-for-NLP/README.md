@@ -40,8 +40,34 @@
 - encoder中的attention都是self-attention，decoder则除了self-attention还有cross-attention。
 - [理解Attention:从起源到MHA,MQA和GQA](https://www.linsight.cn/3dc22f96.html#mha)
 - Transformer模型架构中的其他部分
-  - Layer Normalization: 加速模型的优化速度.
-  - Feed Forward Network: FFN的加入引入了非线性(ReLu激活函数).
+  - Layer Normalization: 加速模型的优化速度。
+  - Feed Forward Network: FFN的加入引入了非线性(ReLu激活函数)，变换了attention output的空间, 从而增加了模型的表现能力。
   - Positional Encoding
     
 ### The encoder stack
+
+Each layer contains two main sublayers: a multi-headed attention mechanism and a fully connected position-wise feedforward network.
+
+Notice that a residual connection surrounds each main sublayer, sublayer(x), in the Transformer model. These connections transport the unprocessed input x of a sublayer to a layer normalization function. This way, we are certain that key information such as positional encoding is not lost on the way. 
+- LayerNormalization (x + Sublayer(x))
+
+#### Input embedding
+
+#### Positional encoding
+
+Use a unit sphere to represent positional encoding with sine and cosine values that will thus remain small but useful.
+
+- [Transformer 中的 positional embedding](https://zhuanlan.zhihu.com/p/359366717)
+- [Attention is all you need; Attentional Neural Network Models](https://www.youtube.com/watch?v=rBCqOTEfxvg)
+  - make a query with a vector and look at similar things in the past
+  - multi-modal
+- [碎碎念：Transformer的细枝末节](https://zhuanlan.zhihu.com/p/60821628)
+
+#### Adding positional encoding to the embedding vector
+
+### The decoder stack
+
+At a given position, the following words are **masked** so that the Transformer bases its assumptions on its inferences without seeing the rest of the sequence.
+
+## 3. Fine-Tuning BERT Models
+
