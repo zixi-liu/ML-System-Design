@@ -71,3 +71,23 @@ At a given position, the following words are **masked** so that the Transformer 
 
 ## 3. Fine-Tuning BERT Models
 
+[详解 Bert：Bidirectional Encoder Representations from Transformers](https://zhuanlan.zhihu.com/p/521330227)
+- 模型输入/输出
+  - token embedding：可以随机初始化，也可以通过word2ve、glove等算法进行预训练的初始化。
+  - position embedding：transformer通过余弦位置编码，bert通过学习位置embedding。
+  - segment embedding：有部分NLP任务的输入不是单个句子，而是句子对（比如：句子匹配），因此需要segment embedding来对句子的序号进行区分。
+  - 最后由三个embedding相加得到word embedding。
+  - 每个序列前面增加一个特殊的类别标记[CLS]。
+  - 在句子A和句子B之间插入[SEP],用于分隔开来两个句子。
+  - 输出分为pooler output和sequence output。
+- 模型结构
+  - bert_base: 12层tansformer encoder, 隐层大小768，self-attention的head数12，总参数110M
+  - bert_large: 24层tansformer encoder, 隐层大小1024，self-attention的head数16，总参数340M
+- 模型训练
+  - 两个自监督任务
+    - Masked Language Model（MLM）
+      - 随机mask掉15%的词（字），然后通过非监督学习的方法来进行预测。
+    - Next Sentence Prediction（NSP）
+      - NSP是选择一个句子对（A，B），其中B有50%是A的下一句，有50%是随机从语料库中挑选的，让模型预测是否B为A的下一句。
+  - 微调
+    - bert之后接全连接+softmax进行分类。
