@@ -2,7 +2,7 @@
 
 [A Survey of Large Language Models](https://arxiv.org/pdf/2303.18223)
 
-#### Introduction
+#### 1. Introduction
 
 **Task solving capacity of LLMs**
 
@@ -23,3 +23,24 @@
 - Adaptation (how to effectively adapt pre-trained LLMs for better use)
 - Utilization (how to use LLMs for solving various downstream tasks)
 - Capability evaluation (how to evaluate the abilities of LLMs and existing empirical findings). 
+
+#### 2. Overview
+
+Large language models (LLMs) refer to Transformer language models that contain hundreds of billions (or more) of parameters
+- GPT-3
+- PaLM
+- Galactica
+- LLaMA
+
+**Formulation of Scaling Laws for LLMs**
+- KM scaling law
+  - model the power-law relationship of model performance with respective to three major factors, namely model size (N), dataset size (D), and the amount of training compute (C)
+
+**Emergent Abilities of LLMs**
+- "the abilities that are not present in small models but arise in large models"
+- three typical emergent abilities for LLMs
+  - In-context learning
+  - Instruction following
+  - Step-by-step reasoning (chain-of-thought (CoT) prompting strategy)
+ 
+**Key Techniques for LLMs**
