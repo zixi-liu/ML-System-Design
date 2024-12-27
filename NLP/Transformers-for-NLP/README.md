@@ -123,3 +123,8 @@ At a given position, the following words are **masked** so that the Transformer 
     - 低秩近似（Low-Rank Approximations）：另一种策略是用一个参数较少但在任务中表现相似的模型来近似微调后的模型。
     - 正则化技术（Regularization Techniques）：可以将正则化项添加到损失函数中，以阻止参数发生较大变化，从而以更“参数高效”的方式有效地微调模型。
     - 任务特定的头（Task-specific Heads）：有时，在预先训练的模型架构中添加一个任务特定的层或“头”，只对这个头进行微调，从而减少需要学习的参数数量。
+
+## 4. Pre-training a RoBERTa Model from Scratch
+
+## 5. Downstream NLP Tasks with Transformers
+
