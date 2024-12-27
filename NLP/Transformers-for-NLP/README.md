@@ -71,6 +71,13 @@ At a given position, the following words are **masked** so that the Transformer 
 
 ## 3. Fine-Tuning BERT Models
 
+- Creating sentences, label lists, and adding BERT tokens
+- Processing the data
+  - sets the maximum length of a sequence to 128, and the sequences are padded
+- Creating attention masks
+- Splitting the data into training and validation sets
+- BERT model configuration
+
 [详解 Bert：Bidirectional Encoder Representations from Transformers](https://zhuanlan.zhihu.com/p/521330227)
 - 模型输入/输出
   - token embedding：可以随机初始化，也可以通过word2ve、glove等算法进行预训练的初始化。
@@ -91,3 +98,28 @@ At a given position, the following words are **masked** so that the Transformer 
       - NSP是选择一个句子对（A，B），其中B有50%是A的下一句，有50%是随机从语料库中挑选的，让模型预测是否B为A的下一句。
   - 微调
     - bert之后接全连接+softmax进行分类。
+
+[Bert系列文章]
+- [Bert系列一：词表示，从one-hot到transformer](https://zhuanlan.zhihu.com/p/365774595)
+  - one-hot
+  - Word2vec: CBOW, Skip-gram
+  - ELMo
+  - Transformer
+- [Bert系列四：生成模型 GPT 1.0 2.0 3.0](https://zhuanlan.zhihu.com/p/365554706)
+
+[有监督微调]
+- [微调基本概念](https://github.com/wdndev/llm_interview_note/blob/main/05.%E6%9C%89%E7%9B%91%E7%9D%A3%E5%BE%AE%E8%B0%83/1.%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1.%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5.md)
+  - Parameter-Efficient Fine-Tuning（PEFT）：通过冻结预训练模型的某些层，并仅微调特定于下游任务的最后几层来实现这种效率。
+  - 高效微调技术可以粗略分为以下三大类
+    - 增加额外参数（A）
+      - 类适配器（Adapter-like）
+      - 软提示（Soft prompts）
+    - 选取一部分参数更新（S）
+    - 引入重参数化（R）
+  - 多种不同的高效微调方法对比
+    - 选择性层调整（Selective Layer Tuning）：可以只微调层的一个子集，而不是微调模型的所有层。这减少了需要更新的参数数量。
+    - 适配器（Adapters）：适配器层是插入预训练模型层之间的小型神经网络。在微调过程中，只训练这些适配器层，保持预先训练的参数冻结。通过这种方式，适配器学习将预先训练的模型提取的特征适应新任务。
+    - 稀疏微调（Sparse Fine-Tuning）：传统的微调会略微调整所有参数，但稀疏微调只涉及更改模型参数的一个子集。这通常是基于一些标准来完成的，这些标准标识了与新任务最相关的参数。
+    - 低秩近似（Low-Rank Approximations）：另一种策略是用一个参数较少但在任务中表现相似的模型来近似微调后的模型。
+    - 正则化技术（Regularization Techniques）：可以将正则化项添加到损失函数中，以阻止参数发生较大变化，从而以更“参数高效”的方式有效地微调模型。
+    - 任务特定的头（Task-specific Heads）：有时，在预先训练的模型架构中添加一个任务特定的层或“头”，只对这个头进行微调，从而减少需要学习的参数数量。
