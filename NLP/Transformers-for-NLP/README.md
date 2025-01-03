@@ -128,3 +128,14 @@ At a given position, the following words are **masked** so that the Transformer 
 
 ## 5. Downstream NLP Tasks with Transformers
 
+**Transformer Performance versus Human Baselines**
+- Evaluating Models with Metrics
+  - Accuracy
+  - F1
+  - MCC
+  - Benchmark Tasks and Datasets
+    - GLUE - SuperGLUE
+
+## 6. Machine Translation with the Transformer
+
+## 7. The Rise of Suprahuman Transformers with GPT-3 Engines
