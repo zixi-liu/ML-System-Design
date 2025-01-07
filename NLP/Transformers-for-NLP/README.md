@@ -139,3 +139,13 @@ At a given position, the following words are **masked** so that the Transformer 
 ## 6. Machine Translation with the Transformer
 
 ## 7. The Rise of Suprahuman Transformers with GPT-3 Engines
+
+
+**Other Resources**
+
+- Hard Attention vs Soft Attention
+- [LLM的3种架构：Encoder-only、Decoder-only、encode-decode](https://zhuanlan.zhihu.com/p/642923989)
+  - encoder-only类型的更擅长做分类；包括情感分析，命名实体识别.
+  - encoder-decoder类型的擅长输出强烈依赖输入的，比如翻译和文本总结，而其他类型的就用decoder-only，如各种Q&A。
+  - 虽然encoder-only没有decoder-only类型的流行，但也经常用于模型预训练.
+- [Transformer模型及其变种（BERT、GPT）](https://zhuanlan.zhihu.com/p/706094599)
