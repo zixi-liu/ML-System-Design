@@ -22,4 +22,5 @@
 
 **From Large Language Models to Foundation Models**
 - CLIP: instead of manually generating labels for each image, they found (image, text) pairs that co-occurred on the internet.
-- 
+  - CLIP is an embedding model, trained to produce joint embeddings of both texts and images.
+  - Multimodal embedding models like CLIP are the backbones of generative multimodal models, such as Flamingo, LLaVA, and Gemini (previously Bard).
