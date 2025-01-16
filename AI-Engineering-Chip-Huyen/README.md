@@ -407,7 +407,49 @@
       - ![image](https://github.com/user-attachments/assets/7c8de8c7-eda4-45d4-bfbd-25d55f76a18c)
   - Prompt-level defense
   - System-level defense
+
+## Chapter 6. RAG and Agents
+
+How to construct the relevant context for each query (context construction)
+- RAG, or retrieval-augmented generation
+  - retrieve relevant information from external data sources.
+- agents
+  - use tools such as web search and news APIs to gather information.
+
+**RAG**
+- Enhances a model’s generation by retrieving the relevant information from external memory sources.
+  - an external memory source can be an internal database, a user’s previous chat sessions, or the internet.
+  - having access to relevant information can help the model generate more detailed responses while reducing hallucinations.
+- Context construction for foundation models is equivalent to feature engineering for classical ML models.
+  - no matter how long a model’s context length is, there will be applications that require context longer than that.
+  - a model that can process long context doesn’t necessarily use that context well
+- RAG Architecture
+  - A RAG system has two components:
+    - a retriever that retrieves information from external memory sources
+    - a generator that generates a response based on the retrieved information.
+  - In today’s RAG systems, these two components are often trained separately.
+  - success of a RAG system depends on the quality of its retriever
+    - A retriever has two main functions: indexing and querying.
+      - Indexing involves processing data so that it can be quickly retrieved later.
+      - Sending a query to retrieve data relevant to it is called querying.
+      - How to index data depends on how you want to retrieve it later on.
+    - Retrieval Algorithms
+      - term-based retrieval (sparse retrievers)
+        - lexical retrieval
+          - TF-IDF
+          - Elasticsearch
+          - BM25: normalizes term frequency scores by document length.
+          - n-gram overlap: difficult to distinguish truly relevant documents from less relevant ones.
+      - embedding-based retrieval (dense retrievers)
+        - semantic retrieval
+        - Querying then consists of two steps:
+          - Embedding model: convert the query into an embedding using the same embedding model used during indexing.
+          - Retriever: fetch k data chunks whose embeddings are closest to the query embedding, as determined by the retriever.
+          - ![image](https://github.com/user-attachments/assets/707c87db-8d4b-4bc6-87c4-1fabadad590b)
+
  
+
+  
 ## Other Resources
 
 - [Reinforcement Learning from Human Feedback: Progress and Challenges](https://www.youtube.com/watch?v=hhiLw5Q_UFg)
