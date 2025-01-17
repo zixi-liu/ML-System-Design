@@ -433,23 +433,96 @@ How to construct the relevant context for each query (context construction)
       - Indexing involves processing data so that it can be quickly retrieved later.
       - Sending a query to retrieve data relevant to it is called querying.
       - How to index data depends on how you want to retrieve it later on.
-    - Retrieval Algorithms
-      - term-based retrieval (sparse retrievers)
-        - lexical retrieval
-          - TF-IDF
-          - Elasticsearch
-          - BM25: normalizes term frequency scores by document length.
-          - n-gram overlap: difficult to distinguish truly relevant documents from less relevant ones.
-      - embedding-based retrieval (dense retrievers)
-        - semantic retrieval
-        - Querying then consists of two steps:
-          - Embedding model: convert the query into an embedding using the same embedding model used during indexing.
-          - Retriever: fetch k data chunks whose embeddings are closest to the query embedding, as determined by the retriever.
-          - ![image](https://github.com/user-attachments/assets/707c87db-8d4b-4bc6-87c4-1fabadad590b)
+- Retrieval Algorithms
+  - term-based retrieval (sparse retrievers)
+    - lexical retrieval
+      - TF-IDF
+      - Elasticsearch
+      - BM25: normalizes term frequency scores by document length.
+      - n-gram overlap: difficult to distinguish truly relevant documents from less relevant ones.
+  - embedding-based retrieval (dense retrievers)
+    - semantic retrieval
+      - Querying then consists of two steps:
+        - Embedding model: convert the query into an embedding using the same embedding model used during indexing.
+        - Retriever: fetch k data chunks whose embeddings are closest to the query embedding, as determined by the retriever.
+        - ![image](https://github.com/user-attachments/assets/707c87db-8d4b-4bc6-87c4-1fabadad590b)
+    - Embedding-based retrieval also introduces a new component: vector databases.
+      - Vector search: Given a query embedding, a vector database is responsible for finding vectors in the database close to the query and returning them.
+      - Vector search is common in any application that uses embeddings: search, recommendation, data organization, information retrieval, clustering, fraud detection, and more.
+      - Vector search is typically framed as a nearest-neighbor search problem. The naive solution is k-nearest neighbors (k-NN).
+      - For large datasets, vector search is typically done using an approximate nearest neighbor (ANN) algorithm.
+      - Some popular vector search libraries are FAISS (Facebook AI Similarity Search), Google’s ScaNN (Scalable Nearest Neighbors), and Hnswlib etc.
+      - Here are some significant vector search algorithms:
+        - LSH (locality-sensitive hashing): hashing similar vectors into the same buckets to speed up similarity search, trading some accuracy for efficiency.
+        - HNSW (Hierarchical Navigable Small World): constructs a multi-layer graph where nodes represent vectors, and edges connect similar vectors, allowing nearest-neighbor searches by traversing graph edges.
+        - Product Quantization: reducing each vector into a much simpler, lower-dimensional representation by decomposing each vector into multiple subvectors. The distances are then computed using the lower-dimensional representations, which are much faster to work with.
+        - IVF (inverted file index): uses K-means clustering to organize similar vectors into the same cluster.
+        - Annoy (Approximate Nearest Neighbors Oh Yeah): builds multiple binary trees, where each tree splits the vectors into clusters using random criteria. During a search, it traverses trees to gather candidate neighbors.
+    - Comparing retrieval algorithms
+      - Term-based retrieval is generally much faster than embedding-based retrieval during both indexing and query.
+      - Embedding-based retrieval, on the other hand, can be significantly improved over time to outperform term-based retrieval.
+      - Quality of a retriever can be evaluated based on the quality of the data it retrieves.
+        - *Context precision*
+        - *Context recall*
+        - *Ranking of the retrieved documents*
+          - NDCG (normalized discounted cumulative gain)
+          - MAP (Mean Average Precision)
+          - MRR (Mean Reciprocal Rank)
+        - *Evaluate the quality of embeddings* (embeddings can be evaluated independently or by how well they work for specific tasks)
+        - *Evaluate in the context of the whole RAG system* (good if it helps the system generate high-quality answers).
+      - Added latency by query embedding generation and vector search might be minimal compared to the total RAG latency (much of RAG latency comes from output generation).
+      - Cost (if your data changes frequently and requires frequent embedding regeneration).
+      - ![image](https://github.com/user-attachments/assets/45b7553e-a762-4cc2-bd97-a89a7fb72c8d)
+    - Combining retrieval algorithms
+      - hybrid search
+        - term-based system plus reranking with embedding-based system
+        - different algorithms can also be used in parallel as an ensemble
+          - use multiple retrievers to fetch candidates at the same time, then combine these different rankings together to generate a final ranking.
+- Retrieval Optiization
+  - certain tactics can increase the chance of relevant documents being fetched.
+  - *Chunking strategy*
+    - chunk documents into chunks of equal length based on a certain unit.
+    - A smaller chunk size allows for more diverse information. Smaller chunks mean that you can fit more chunks into the model’s context.
+    - Small chunk sizes, however, can cause the loss of important information.
+    - Smaller chunk sizes can also increase computational overhead (an issue for embedding-based retrieval).
+  - Reranking
+    - especially useful when you need to reduce the number of retrieved documents.
+    - Documents can also be reranked based on time, giving higher weight to more recent data.
+  - Query rewriting (query reformulation, query normalization, and sometimes query expansion)
+    - In traditional search engines, query rewriting is often done using heuristics.
+    - In AI applications, query rewriting can also be done using other AI models (but may hallucinate).
+  - Contextual retrieval
+    - augment each chunk with relevant context to make it easier to retrieve the relevant chunks.
+      - a simple technique is to augment a chunk with metadata like tags and keywords.
+        - For ecommerce, a product can be augmented by its description and reviews.
+        - Images and videos can be queried by their titles or captions.
+      - augment each chunk with the questions it can answer.
+      - augment each chunk with the context from the original document.
+        - Anthropic used AI models to generate a short context, usually 50-100 tokens, that explains the chunk and its relationship to the original document.
+        - ![image](https://github.com/user-attachments/assets/ed769e3b-a5d2-4d5c-a1a3-acd182a5020d)
+  - key factors to keep in mind when evaluating a retrieval solution:
+    - What retrieval mechanisms does it support? Does it support hybrid search?
+    - If it’s a vector database, what embedding models and vector search algorithms does it support?
+    - How scalable is it, both in terms of data storage and query traffic? Does it work for your traffic patterns?
+    - How long does it take to index your data? How much data can you process (such as add/delete) in bulk at once?
+    - What’s its query latency for different retrieval algorithms?
+    - If it’s a managed solution, what’s its pricing structure? Is it based on the document/vector volume or on the query volume?
+- RAG Beyond Texts
+  - Multimodal RAG
+    - ![image](https://github.com/user-attachments/assets/4f37d848-457f-47f7-ac2d-5434483f24eb)
+    - If the images have metadata—such as titles, tags, and captions—they can be retrieved using the metadata.
+    - If you want to retrieve images based on their content, you’ll need to have a way to compare images to queries.
+      - Let’s say you use CLIP as the multimodal embedding model.
+        - Generate CLIP embeddings for all your data, both texts and images, and store them in a vector database.
+        - Given a query, generate its CLIP embedding.
+        - Query in the vector database for all images and texts whose embeddings are close to the query embedding.
+  - RAG with tabular data
 
- 
+**Agents**
+- An agent is anything that can perceive its environment and act upon that environment.
 
-  
+
+
 ## Other Resources
 
 - [Reinforcement Learning from Human Feedback: Progress and Challenges](https://www.youtube.com/watch?v=hhiLw5Q_UFg)
