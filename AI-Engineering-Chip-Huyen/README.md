@@ -520,8 +520,76 @@ How to construct the relevant context for each query (context construction)
 
 **Agents**
 - An agent is anything that can perceive its environment and act upon that environment.
+- The set of actions an AI agent can perform is augmented by the tools it has access to.
+- Compared to non-agent use cases, agents typically require more powerful models for two reasons:
+  - Compound mistakes
+  - Higher stakes
+- Tools
+  - Tools help an agent to both perceive the environment and act upon it.
+    - Actions that allow an agent to perceive the environment are read-only actions.
+    - Actions that allow an agent to act upon the environment are write actions.
+  - Three categories of tools that you might want to consider:
+    - knowledge augmentation (i.e., context construction)
+    - capability extension
+    - tools that let your agent act upon its environment
+  - Knowledge augmentation
+    - text retriever, image retriever, and SQL executor.
+    - Other potential tools include internal people search, an inventory API that returns the status of different products, Slack retrieval, an email reader, etc.
+    - Web browsing prevents a model from going stale.
+      - Select your Internet APIs with care.
+  - Capability extension
+    - address the inherent limitations of AI models. (i.e. giving the model access to a calculator)
+    - Other simple tools that can significantly boost a model’s capability include a calendar, timezone converter, unit converter (e.g., from lbs to kg), and translator that can translate to and from the languages that the model isn’t good at.
+    - More complex but powerful tools are code interpreters.
+    - External tools can make a text-only or image-only model multimodal.
+      - a model that can process only text inputs can use an image captioning tool to process images and a transcription tool to process audio. It can use an OCR (optical character recognition) tool to read PDFs.
+    - Tool use can significantly boost a model’s performance compared to just prompting or even finetuning.
+  - Write actions
+- Planning
+  - Planning overview
+    - To avoid fruitless execution, planning should be decoupled from execution.
+      - The plan can be validated using heuristics.
+        - one simple heuristic is to eliminate plans with invalid actions. (i.e. the generated plan requires a Google search and the agent doesn’t have access to Google Search, this plan is invalid.)
+        - another simple heuristic might be eliminating all plans with more than X steps. 
+    - multi-agent system
+      - three components: generating plans, validating plans, and executing plans.
+    - To speed up the process, instead of generating plans sequentially, you can generate several plans in parallel and ask the evaluator to pick the most promising one.
+    - An intent classifier is often used to help agents plan.
+  - Foundation models as planners
+    - Planning, at its core, is a search problem.
+      - Search often requires backtracking.
+    - To plan, it’s necessary to know not only the available actions but also the potential outcome of each action.
+  - RL vs Foundation model planners
+    - The main difference is in how their planners work.
+      - In an RL agent, the planner is trained by an RL algorithm.
+      - In an FM agent, the model is the planner. This model can be prompted or finetuned to improve its planning capabilities, and generally requires less time and fewer resources.
+    - Plan generation
+    - Function calling
+    - Planning granularity
+    - Complex plans
+      - Control flows
+      - ![image](https://github.com/user-attachments/assets/18ceb7c4-288d-4c78-938b-4e73e0bfd7a1)
+  - Reflection and error correction
+    - Reflection can be useful in many places during a task process:
+      - After receiving a user query to evaluate if the request is feasible.
+      - After the initial plan generation to evaluate whether the plan makes sense.
+      - After each execution step to evaluate if it’s on the right track.
+      - After the whole plan has been executed to determine if the task has been accomplished.
+    - Reflection can be done with the same agent using self-critique prompts. It can also be done with a separate component, such as a specialized scorer: a model that outputs a concrete score for each outcome.
+    - The downside of this approach is latency and cost.
+  - Tool selection
+    - Compare how an agent performs with different sets of tools.
+    - Do an ablation study to see how much the agent’s performance drops if a tool is removed from its inventory.
+    - Look for tools that the agent frequently makes mistakes on. If a tool proves too hard for the agent to use—for example, extensive prompting and even finetuning can’t get the model to learn to use it—change the tool.
+    - Plot the distribution of tool calls to see what tools are most used and what tools are least used.
+    - Experiments by Lu et al. (2023) also demonstrate two points:
+      - Different tasks require different tools.
+      - Different models have different tool preferences.
 
 
+
+     
+  
 
 ## Other Resources
 
