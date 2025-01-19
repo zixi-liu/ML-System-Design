@@ -585,11 +585,139 @@ How to construct the relevant context for each query (context construction)
     - Experiments by Lu et al. (2023) also demonstrate two points:
       - Different tasks require different tools.
       - Different models have different tool preferences.
+- Agent Failure Modes and Evaluation
+  - Planning failures
+    - Invalid tool
+    - Valid tool, invalid parameters
+    - Valid tool, incorrect parameter values
+    - Goal failure: the agent fails to achieve the goal.
+    - A common constraint that is often overlooked by agent evaluation is time.
+    - To evaluate an agent for planning failures, one option is to create a planning dataset where each example is a tuple (task, tool inventory). For each task, use the agent to generate a K number of plans. Compute the following metrics:
+      - Out of all generated plans, how many are valid?
+      - For a given task, how many plans does the agent have to generate, on average, to get a valid plan?
+      - Out of all tool calls, how many are valid?
+      - How often are invalid tools called?
+      - How often are valid tools called with invalid parameters?
+      - How often are valid tools called with incorrect parameter values?
+      - Analyze the agent’s outputs for patterns.
+  - Tool failures
+    - Tool failures happen when the correct tool is used, but the tool output is wrong.
+  - Efficiency
+    - a few things you might want to track to evaluate an agent’s efficiency:
+      - How many steps does the agent need, on average, to complete a task?
+      - How much does the agent cost, on average, to complete a task?
+      - How long does each action typically take? Are there any actions that are especially time-consuming or expensive?
+  - Memory
+    - An AI model typically has three main memory mechanisms:
+      - Internal knowledge
+      - Short-term memory
+        - A model’s context can be considered its short-term memory as it doesn’t persist across tasks (queries) (i.e. Previous messages in a conversation can be added to the model’s context).
+      - Long-term memory
+        - External data sources that a model can access via retrieval, such as in a RAG system, are a memory mechanism.
+      - ![image](https://github.com/user-attachments/assets/592c9558-7fa8-4e63-a2f8-900a9294ebf9)
+    - Augmenting an AI model with a memory system has many benefits
+      - Manage information overflow within a session (The excess information can be stored in a memory system with long-term memories.)
+      - Persist information between sessions
+      - Boost a model’s consistency
+      - Maintain data structural integrity
+    - A memory system for AI models typically consists of two functions:
+      - Memory management: managing what information should be stored in the short-term and long-term memory.
+        - two operations: add and delete memory
+        - Long-term memory can be used to store the overflow from short-term memory.
+        - The simplest strategy is FIFO, first in, first out.
+        - More-sophisticated strategies involve removing redundancy.
+          - One way to remove redundancy is by using a summary of the conversation. This summary can be generated using the same or another model. Summarization, together with tracking named entities, can take you a long way.
+          - Reflection approach:
+            - Reflect on the information that has just been generated.
+            - Determine if this new information should be inserted into the memory.
+      - Memory retrieval: retrieving information relevant to the task from long-term memory.
+
+
+## Chapter 7. Finetuning
+
+Finetuning
+- the process of adapting a model to a specific task by further training the whole model or part of the model.
+- one way to do transfer learning.
+- Transfer learning improves sample efficiency, allowing a model to learn the same behavior with fewer examples.
+- Ideally, much of what the model needs to learn is already present in the base model, and finetuning just refines the model’s behavior.
+  - *supervised finetuning* uses high-quality annotated data to refine the model to align with human usage and preference.
+  - *preference finetuning* requires comparative data that typically follows the format (instruction, winning response, losing response).
+  - *long-context finetuning* typically requires modifying the model’s architecture, such as adjusting the positional embeddings.
+  - ![image](https://github.com/user-attachments/assets/d368fdc1-f065-43d8-aa45-9ed1d6736059)
+
+**When to Finetune**
+- Reasons to Finetune
+  - The primary reason for finetuning is to improve a model’s quality, in terms of both general capabilities and task-specific capabilities.
+    - One especially interesting use case of finetuning is bias mitigation.
+    - Finetuning smaller models is much more common. Smaller models require less memory, and, therefore, are easier to finetune.
+      - Distillation: A common approach is to finetune a small model to imitate the behavior of a larger model using data generated by this large model.
+- Reasons Not to Finetune
+  - While finetuning a model for a specific task can improve its performance for that task, it can degrade its performance for other tasks.
+    - If you can’t seem to get a model to perform well on all your tasks, consider using separate models for different tasks.
+  - AI engineering experiments should start with prompting. Explore more advanced solutions only if prompting alone proves inadequate.
+- Finetuning domain-specific tasks
+  - One benefit of finetuning, before prompt caching was introduced, was that it can help optimize token usage.
+    - The more examples you add to a prompt, the more input tokens the model will use, which increases both latency and cost.
+      - you can finetune a model on these examples.
+    - Prompt caching
+    - ![image](https://github.com/user-attachments/assets/43975299-ceb0-4095-9196-29ced16b5e17)
+- Finetuning and RAG
+  - information-based failures: If the model fails because it lacks information, a RAG system that gives the model access to the relevant sources of information can help.
+    - The model doesn’t have the information.
+    - The model has outdated information.
+  - For tasks that require up-to-date information, such as questions about current events, RAG outperformed finetuned models.
+  - While finetuning can enhance a model’s performance on a specific task, it may also lead to a decline in performance in other areas.
+    - RAG with the base model outperformed RAG with finetuned models.
+  - If the model has behavioral issues, finetuning might help.
+    - when the model’s outputs are factually correct but irrelevant to the task.
+    - when it fails to follow the expected output format.
+    - Semantic parsing
+  - In short, finetuning is for form, and RAG is for facts.
+    - If your model has both information and behavior issues, start with RAG.
+    - When doing RAG, start with simple term-based solutions such as BM25 instead of jumping straight into something that requires vector databases.
+  - RAG and finetuning aren’t mutually exclusive.
+  - ![image](https://github.com/user-attachments/assets/ce7342ff-04ab-4678-89d6-2350782c6592)
+
+**Memory Bottlenecks**
+- Many finetuning techniques aim to minimize their memory footprint.
+- Key takeaways for understanding memory bottlenecks
+  - Because of the scale of foundation models, memory is a bottleneck for working with them, both for inference and for finetuning.
+  - The key contributors to a model’s memory footprint during finetuning are its number of parameters, its number of trainable parameters, and its numerical representations.
+  - You can reduce memory requirement for finetuning by reducing the number of trainable parameters. Reducing the number of trainable parameters is the motivation for PEFT, parameter-efficient finetuning.
+  - Quantization refers to the practice of converting a model from a format with more bits to a format with fewer bits.
+  - Inference is typically done using as few bits as possible, such as 16 bits, 8 bits, and even 4 bits.
+  - Training is more sensitive to numerical precision, so it’s harder to train a model in lower precision.
+- Backpropagation and Trainable Parameters
+  - During the backward pass, each trainable parameter comes with additional values, its gradient, and its optimizer states.
+  - The more trainable parameters there are, the more memory is needed to store these additional values.
+- Memory Math
+  - For many applications, the memory for activation and key-value vectors can be assumed to be 20% of the memory for the model’s weights.
+  - The memory needed for training:
+    - Training memory = model weights + activations + gradients + optimizer states
+    - Instead of storing activations for reuse, you recompute activations when necessary. This technique is called *gradient checkpointing* or *activation recomputation*.
+- Numerical Representations
+- Quantization
+  - What to quantize
+    - Weight quantization is more common than activation quantization, since weight activation tends to have a more stable impact on performance with less accuracy loss.
+  - When to quantize
+    - Quantization can happen during training or post-training. PTQ is by far the most common.
+  - Inference quantization
+    - A model can also be served in mixed precision, where values are reduced in precision when possible and maintained in higher precision when necessary.
+  - Training quantization
+    - Quantization-aware training (QAT) aims to create a model with high quality in low precision for inference.
+    - Training a model directly in lower precision can help with both goals.
+    - Lower-precision training is often done in mixed precision, where a copy of the weights is kept in higher precision but other values, such as gradients and activations, are kept in lower precision.
+    - The portions of the model that should be in lower precision can be set automatically using the automatic mixed precision (AMP) functionality offered by many ML frameworks.
+    - Different phases of training in different precision levels:
+      - trained in higher precision but finetuned in lower precision.
+
+**Finetuning Techniques**
 
 
 
-     
-  
+
+
+
 
 ## Other Resources
 
