@@ -712,9 +712,73 @@ Finetuning
       - trained in higher precision but finetuned in lower precision.
 
 **Finetuning Techniques**
+- Parameter-Efficient Finetuning
+  - *Full finetuning*: the number of trainable parameters is exactly the same as the number of parameters.
+    - Full finetuning starts with model weights that have been previously trained.
+    - To fit a model on a given hardware, you can either reduce the model’s memory footprint or find ways to use the hardware’s memory more efficiently.
+      - Quantization
+      - PRFT
+      - CPU offloading (demo by DeepSpeed)
+  - *Partial finetuning*: requires many trainable parameters to achieve performance close to that of full finetuning.
+  - *Parameter-efficient*: a technique is considered parameter-efficient if it can achieve performance close to that of full finetuning while using several orders of magnitude fewer trainable parameters.
+  - PEFT (parameter-efficient finetuning)
+    - By inserting additional parameters into the model in the right places, you can achieve strong finetuning performance using a small number of trainable parameters.
+    - ![image](https://github.com/user-attachments/assets/89a5724e-3ca5-4c8a-b186-f104e20fcdc9)
+    - During finetuning, they kept the model’s original parameters unchanged and only updated the adapters. The number of trainable parameters is the number of parameters in the adapters.
+    - Downside of this approach is that it increases the inference latency of the finetuned model.
+    - **PEFT techniques**
+      - adapter-based methods (additive methods): all methods that involve additional modules to the model weights.
+      - soft prompt-based methods: modify how the model processes the input by introducing special trainable tokens. These additional tokens are fed into the model alongside the input tokens. soft prompts differ from hard prompts in two ways:
+        - Hard prompts are human-readable. They typically contain discrete tokens. In contrast, soft prompts are continuous vectors, resembling embedding vectors.
+        - Hard prompts are static and not trainable, whereas soft prompts can be optimized through backpropagation during the tuning process, allowing them to be adjusted for specific tasks.
+        - ![image](https://github.com/user-attachments/assets/113284f1-12f8-4dd1-9714-bb7f7888c68b)
+        - prefix-tuning, P-Tuning, and prompt tuning. They differ mainly on the locations where the soft prompts are inserted.
+        - **LoRA (Low-Rank Adaptation)**
+          - LoRA incorporates additional parameters in a way that doesn’t incur extra inference latency.
+            - The key idea is that you can factorize a large matrix into a product of two smaller matrices to reduce the number of parameters, which, in turn, reduces both the computation and memory requirements.
+          - Given a weight matrix, LoRA decomposes this matrix into the product of two smaller matrices, then updates these two smaller matrices before merging them back to the original matrix.
+          - LoRA is parameter-efficient and sample-efficient.
+          - Why does LoRA work?
+            - Pre-training acts as a compression framework for downstream tasks. The better trained an LLM is, the easier it is to finetune the model using a small number of trainable parameters and a small amount of data.
+            - However, full-rank pre-training is still necessary to sufficiently reduce the model’s intrinsic dimension to a point where low-rank factorization can work.
+          - LoRA configurations
+            - LoRA has been primarily used for transformer models.
+            - LoRA is most commonly applied to the four weight matrices in the attention modules: the query (Wq), key (Wk), value (Wv), and output projection (Wo) matrices.
+          - The beauty of LoRA is that while its performance depends on its rank, studies have shown that a small r, such as between 4 and 64, is usually sufficient for many use cases.
+    - Model Merging and Multi-Task Finetuning
+      - model merging allows you to create a custom model by combining multiple models.
+      - Without model merging, if you want to a finetune a model for multiple tasks, you generally have to follow one of these approaches:
+        - Simultaneous finetuning
+        - Sequential finetuning
+          - Unfortunately, neural networks are prone to catastrophic forgetting.
+      - Model merging is one way to do federated learning, in which multiple devices train the same model using separate data.
+      - Model merging vs Ensembling: If model merging typically involves mixing parameters of constituent models together, ensembling typically combines only model outputs while keeping each constituent model intact.
+      - Three approaches covered here are summing, layer stacking, and concatenation.
+        - ![image](https://github.com/user-attachments/assets/fc55a2e4-9957-4468-963b-070c9443c604)
+    - Finetuning Tactics
+      - Finetuning frameworks and base models
+        - Base models
+          -  [OpenAI’s finetuning best practices document](https://docs.google.com/document/d/1rqj7dkuvl7Byd5KQPUJRxc19BJt8wo0yHNwK84KfU3Q/edit?tab=t.0) gives examples of two development paths:
+            - the progression path
+            - the distillation path
+      - Finetuning methods
+      - Finetuning frameworks
+        - use a finetuning API
+        - LLaMA-Factory, unsloth, PEFT, Axolotl, and LitGPT.
+      - Finetuning hyperparameters
+        - Learning rate
+          - You’ll have to experiment with different learning rates, typically between the range of 1e-7 to 1e-3.
+          - A common practice is to take the learning rate at the end of the pre-training phase and multiply it with a constant between 0.1 and 1.
+        - Batch size
+          - cost versus efficiency trade-off: In general, the larger the batch size, the faster the model can go through training examples. However, the larger the batch size, the more memory is needed to run your model.
+          - gradient accumulation (when small batch size are used due to memory constraint): accumulate gradients across several batches and update the model weights once enough reliable gradients are accumulated.
+        - Number of epochs
+          - If both the training loss and the validation loss still steadily decrease, the model can benefit from more epochs (and more data).
+          - If the training loss still decreases but the validation loss increases, the model is overfitting to the training data, and you might try lowering the number of epochs.
+        - Prompt loss weight
+          - The prompt model weight determines how much prompts should contribute to this loss compared to responses.
 
-
-
+ ## Chapter 8. Dataset Engineering
 
 
 
