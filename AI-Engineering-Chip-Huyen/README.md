@@ -800,6 +800,80 @@ Finetuning
 - Data augmentation creates new data from existing data.
 - Data synthesis generates data to mimic the properties of real data.
   - Traditional Data Synthesis Techniques
+    - Rule-based data synthesis
+      - One interesting transformation is perturbation: adding noise to existing data to generate new data.
+      - Perturbation can both improve the model’s performance and make it more robust against attacks;
+      - Perturbation can also be used for texts. For example, to train BERT, the authors replaced 1.5% of the tokens with random words.
+      - Visual data can be augmented using more sophisticated algorithms. For example, Snap has a great case study on how they augment their assets to create unrepresented corner cases and mitigate implicit biases in their data.
+    - Simulation-based techniques
+      - self-driving simulation engines
+      - simulate training data for robotics in a virtual environment
+      - Simulations are common to generate data to teach models to use tools.
+      - Simulations are particularly valuable for generating data for rare events.
+    - AI-Powered Data Synthesis
+      - Self-play for agents: You can have AIs negotiate against each other using different strategies to see which one works better.
+      - AI’s paraphrasing and translation abilities can be used to augment existing datasets.
+      - AI can generate data for both pre-training and post-training, though synthetic data is intentionally included much more often in post-training than in pre-training.
+    - Instruction data synthesis
+      - Use humans to write instructions and AI to generate responses.
+    - Data verification
+      - The quality of AI-generated data can be measured the same way you’d evaluate other AI outputs—by functional correctness and AI judges.
+      - For synthetic data that can’t be verified by functional correctness, it’s common to use AI verifiers. An AI verifier can be a general-purpose AI judge or a specialized scorer.
+    - Limitations to AI-generated data
+      - Quality control
+      - Superficial imitation
+        - the imitation models are good at mimicking the style of the teacher models but might struggle with factual accuracy and generalization to tasks outside the training data.
+      - Potential model collapse
+        - recursively using AI-generated data in training causes irreversible defects in the resulting models, degrading their performance over time.
+        - AI models are more likely to generate probable events (e.g., not having cancer) and less likely to generate improbable events (e.g., having cancer). Over multiple iterations, probable events become over-represented, whereas improbable events become under-represented in the generated data.
+    - Model Distillation
+      - a method in which a small model (student) is trained to mimic a larger model (teacher).
+      - By introducing mechanisms to verify the quality of synthetic data and using only verified synthetic data, we were able to continually improve a model using its generated data.
+
+**Data Processing**
+- Inspect Data
+- Duplicate Data
+  - some concrete ways you can deduplicate data:
+    - Pairwise comparison: Compute the similarity score of each example to every other example
+    - Hashing: Hash examples into different buckets and check only among examples that fall into the same bucket.
+    - Dimensionality reduction: Use a dimensionality reduction technique to first reduce the dimensions of your data and then do a pairwise comparison.
+- Clean and Filter Data
+  - use active learning techniques to select examples that are the most helpful for your model to learn from.
+  - use importance sampling to find examples that are most important to your task.
+  - the discovery of good data-pruning metrics can significantly reduce the resource costs of modern deep learning.
+- Format Data
+
+## Chapter 9. Inference Optimization
+
+**Understanding Inference Optimization**
+- Inference Overview
+  - the component that runs model inference is called an inference server.
+  - ![image](https://github.com/user-attachments/assets/e120988c-1a26-45b2-9984-60d88ab9e172)
+  - Computational bottlenecks
+    - compute-bound: refers to tasks whose time-to-complete is determined by the computation needed for the tasks.
+      - a compute-bound workload might be sped up by spreading it out to more chips or by leveraging chips with more computational power (e.g., a higher FLOP/s number).
+    - memory bandwidth-bound: constrained by the data transfer rate within the system, such as the speed of data movement between memory and processors.
+      - For example, if you store your data in the CPU memory and train a model on GPUs, you have to move data from the CPU to the GPU, which can take a long time.
+      - a memory bandwidth-bound workload might be sped up by leveraging chips with higher bandwidth.
+    - Different model architectures and workloads result in different computational bottlenecks. For example, inference for image generators like Stable Diffusion is typically compute-bound, whereas inference for autoregression language models is typically memory bandwidth-bound.
+      - inference for a transformer-based language model consists of two steps:
+        - Prefill: The model processes the input tokens in parallel. prefilling is compute-bound.
+        - Decode: The model generates one output token at a time. At a high level, this step typically involves loading large matrices (e.g., model weights) into GPUs, which is limited by how quickly your hardware can load data into memory. Decoding is, therefore, memory bandwidth-bound.
+        - ![image](https://github.com/user-attachments/assets/312c0ac4-fbf4-4104-be71-defa2d833562)
+        - Long context typically results in a memory bandwidth-bound workload
+  - Online and batch inference APIs
+    - Online APIs optimize for latency. Requests are processed as soon as they arrive.
+      - Many online APIs offer streaming mode, which returns each token as it’s generated.
+        - The downside of this approach is that you can’t score a response before showing it to users, increasing the risk of users seeing bad responses.
+    - Batch APIs optimize for cost.
+    - an online API focuses on lower latency, whereas a batch API focuses on higher throughput.
+- Inference Performance Metrics
+
+
+    
+
+ 
+
 
 
 ## Other Resources
