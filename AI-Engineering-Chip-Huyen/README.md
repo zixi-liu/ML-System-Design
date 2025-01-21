@@ -1,4 +1,4 @@
-## Chapter 1. Introduction to Building AI Applications with Foundation Models
+<img width="655" alt="image" src="https://github.com/user-attachments/assets/e7f49a4c-cd0d-4642-a83b-83c3927b0eaa" />## Chapter 1. Introduction to Building AI Applications with Foundation Models
 
 **model as a service**
 
@@ -947,7 +947,81 @@ Finetuning
       - Context parallelism: the input sequence itself is split across different devices to be processed separately.
       - Sequence parallelism: operators needed for the entire input are split across machines.
  
+## Chapter 10. AI Engineering Architecture and User Feedback
 
+**AI Engineering Architecture**
+- add more components as needs arise:
+  - *Enhance context* input into a model by giving the model access to external data sources and tools for information gathering.
+    - Context construction is like feature engineering for foundation models.
+    - A specialized RAG solution might let you upload as many documents as your vector database can accommodate, but a generic model API might let you upload only a small number of documents.
+    - <img width="655" alt="image" src="https://github.com/user-attachments/assets/544f458a-d338-4fb5-bf5e-30a9282fb6af" />
+  - *Put in guardrails* to protect your system and your users.
+    - Input guardrails
+      - protect against two types of risks: leaking private information to external APIs and executing bad prompts that compromise your system.
+    - Output guardrails
+      - Catch output failures
+        - Quality
+          - Malformatted responses that don’t follow the expected output format. For example, the application expects JSON, and the model generates invalid JSON.
+          - Factually inconsistent responses hallucinated by the model.
+          - Generally bad responses. For example, you ask the model to write an essay, and that essay is just bad.
+        - Security
+          - Toxic responses that contain racist content, sexual content, or illegal activities.
+          - Responses that contain private and sensitive information.
+          - Responses that trigger remote tool and code execution.
+          - Brand-risk responses that mischaracterize your company or your competitors.
+      - Specify the policy to handle different failure modes
+        - Many failures can be mitigated by simple retry logic.
+        - If the retry is carried out after failure, the user-perceived latency will double. To reduce latency, you can make calls in parallel.
+          - This increases the number of redundant API calls while keeping latency manageable.
+      - Guardrail implementation
+        - reliability versus latency trade-off
+        - Output guardrails might not work well in the stream completion mode.
+        - Third-party APIs can reduce the guardrails you need to implement since API providers typically provide many guardrails out of the box for you.
+        - <img width="649" alt="image" src="https://github.com/user-attachments/assets/9c2b1779-035a-4859-9530-876ac3c2c000" />
+  - *Add model router and gateway* to support complex pipelines and add more security.
+    - Router
+      - A router typically consists of an intent classifier that predicts what the user is trying to do. Based on the predicted intent, the query is routed to the appropriate solution.
+      - Other routers can aid the model in deciding what to do next. For example, for an agent capable of multiple actions, a router can take the form of a next-action predictor.
+      - <img width="649" alt="image" src="https://github.com/user-attachments/assets/9ea23fc2-a7e7-4092-9c5d-26771a33d52c" />
+    - Gateway
+      - A model gateway is an intermediate layer that allows your organization to interface with different models in a unified and secure manner.
+      - If a model API changes, you only need to update the gateway instead of updating all applications that depend on this API.
+      - <img width="643" alt="image" src="https://github.com/user-attachments/assets/ae37a545-6b3f-4b4f-a384-a42fbdf9c6c7" />
+      - A model gateway provides access control and cost management.
+      - A model gateway can also be used to implement fallback policies to overcome rate limits or API failures.
+      - Since requests and responses are already flowing through the gateway, it’s a good place to implement other functionalities, such as load balancing, logging, and analytics.
+      - <img width="641" alt="image" src="https://github.com/user-attachments/assets/06b75e18-f00b-409c-af11-1a1a21a0111f" />
+  - *Optimize for latency* and costs with caching.
+    - Exact caching
+      - With exact caching, cached items are used only when these exact items are requested.
+      - Exact caching is also used for embedding-based retrieval to avoid redundant vector search.
+      - Caching is especially appealing for queries that involve multiple steps (e.g., chain-of-thought) and/or time-consuming actions (e.g., retrieval, SQL execution, or web search).
+      - An exact cache can be implemented using in-memory storage for fast retrieval. However, since in-memory storage is limited, a cache can also be implemented using databases like PostgreSQL, Redis, or tiered storage to balance speed and storage capacity.
+        - Having an eviction policy is crucial to manage the cache size and maintain performance. Common eviction policies include Least Recently Used (LRU), Least Frequently Used (LFU), and first in, first out (FIFO).
+      - How long to keep a query in the cache depends on how likely this query is to be called again.
+      - Caching, when not properly handled, can cause data leaks.
+    - Semantic caching
+      - cached items are used even if they are only semantically similar, not identical, to the incoming query.
+      - Semantic caching works only if you have a reliable way of determining if two queries are similar.
+      - Its success relies on high-quality embeddings, functional vector search, and a reliable similarity metric.
+      - In addition, semantic cache can be time-consuming and compute-intensive, as it involves a vector search.
+    - <img width="649" alt="image" src="https://github.com/user-attachments/assets/2ab2acee-3dff-4cc2-8267-18ba409d2ce2" />
+  - *Add Agent Patterns* - Add complex logic and write actions to maximize your system’s capabilities.
+    - <img width="641" alt="image" src="https://github.com/user-attachments/assets/8c5be360-e7bc-4e6e-b750-d80a0228cc9a" />
+  - Monitoring and Observability
+    - The goal of monitoring is the same as the goal of evaluation: to mitigate risks and discover opportunities.
+      - Risks that monitoring should help you mitigate include application failures, security attacks, and drifts.
+      - Monitoring can help discover opportunities for application improvement and cost savings.
+      - Three metrics can help evaluate the quality of your system’s observability, derived from the DevOps community:
+        - MTTD (mean time to detection): When something bad happens, how long does it take to detect it?
+        - MTTR (mean time to response): After detection, how long does it take to be resolved?
+        - CFR (change failure rate): The percentage of changes or deployments that result in failures requiring fixes or rollbacks. If you don’t know your CFR, it’s time to redesign your platform to make it more observable.
+      - Evaluation metrics should translate well to monitoring metrics, meaning that a model that does well during evaluation should also do well during monitoring. Issues detected during monitoring should be fed to the evaluation pipeline.
+      - *Observability makes an assumption*: a system’s internal states can be inferred from knowledge of its external outputs.
+    - Metrics
+      - format failures
+      - factual consistency and relevant generation quality metrics such as conciseness, creativity, or positivity.
+      - track toxicity-related metrics and detect private and sensitive information in both inputs and outputs.
 
 
 
