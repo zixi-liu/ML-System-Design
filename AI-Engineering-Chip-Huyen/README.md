@@ -1,4 +1,4 @@
-<img width="655" alt="image" src="https://github.com/user-attachments/assets/e7f49a4c-cd0d-4642-a83b-83c3927b0eaa" />## Chapter 1. Introduction to Building AI Applications with Foundation Models
+## Chapter 1. Introduction to Building AI Applications with Foundation Models
 
 **model as a service**
 
