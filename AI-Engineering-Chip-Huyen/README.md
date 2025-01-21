@@ -1022,7 +1022,50 @@ Finetuning
       - format failures
       - factual consistency and relevant generation quality metrics such as conciseness, creativity, or positivity.
       - track toxicity-related metrics and detect private and sensitive information in both inputs and outputs.
+      - Model quality can also be inferred through user natural language feedback and conversational signals.
+      - Length-related metrics are also important for tracking latency and costs, as longer contexts and responses typically increase latency and incur higher costs.
+      - Each component in an application pipeline has its own metrics.
+      - It’s useful to measure how these metrics correlate to each other and, especially, to your business north star metrics, which can be DAU (daily active user), session duration (the length of time a user spends actively engaged with the application), or subscriptions.
+      - Tracking latency is essential for understanding the user experience.
+        - Time to first token (TTFT): the time it takes for the first token to be generated.
+        - Time per output token (TPOT): the time it takes to generate each output token.
+        - Total latency: the total time required to complete a response.
+      - Cost-related metrics are the number of queries and the volume of input and output tokens, such as tokens per second (TPS).
+        - If you use an API with rate limits, tracking the number of requests per second is important to ensure you stay within your allocated limits and avoid potential service interruptions.
+      - Logs and traces
+      - Drift detection
+        - System prompt changes
+        - User behavior changes
+        - Underlying model changes
+  - AI Pipeline Orchestration
 
+**User Feedback**
+- Extracting Conversational Feedback
+  - Explicit feedback is information users provide in response to explicit requests for feedback in the application, such as thumbs up/thumbs down, upvote/downvote, star rating, or a yes/no answer to the question.
+  - Implicit feedback is information inferred from user actions.
+  - User feedback, extracted from conversations, can be used for evaluation, development, and personalization:
+    - Evaluation: derive metrics to monitor the application
+    - Development: train the future models or guide their development
+    - Personalization: personalize the application to each user
+- Natural language feedback
+  - Early termination
+  - Error correction
+  - Complaints
+  - Sentiment
+  - model’s refusal rate
+- Other conversational feedback
+  - Regeneration
+  - Conversation organization
+  - Conversation length
+    - the number of turns per conversation
+  - Dialogue diversity
+    - measured by the distinct token or topic count
+- Feedback Limitations
+  - Biases
+    - Leniency bias
+    - Randomness
+    - Position bias
+    - Preference bias
 
 
 ## Other Resources
