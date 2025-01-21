@@ -868,11 +868,86 @@ Finetuning
     - Batch APIs optimize for cost.
     - an online API focuses on lower latency, whereas a batch API focuses on higher throughput.
 - Inference Performance Metrics
+  - Latency, TTFT, and TPOT
+    - Latency measures the time from when users send a query until they receive the complete response.
+    - For autoregressive generation, especially in the streaming mode, the overall latency can be broken into several metrics:
+      - Time to first token: It corresponds to the duration of the prefill step and depends on the input’s length.
+      - Time per output token: measures how quickly each output token is generated after the first token.
+      - Time between tokens and inter-token latency: measure the time between output tokens.
+    - scenarios involving CoT (chain-of-thought) or agentic queries
+      - use time to publish to make it explicit that it measures time to the first token users see.
+    - more helpful to look at latency in percentiles
+  - Throughput and goodput
+    - Throughput measures the number of output tokens per second an inference service can generate across all users and requests.
+      - tokens/s (TPS)
+      - If you serve multiple users, tokens/s/user is also used to evaluate how the system scales with more users.
+      - Throughput can also be measured as the number of completed requests during a given time.
+        - requests per second (RPS) / requests per minute (RPM)
+        - Tracking this metric is useful for understanding how an inference service handles concurrent requests.
+    - A higher throughput typically means lower cost.
+      - The total cost per request is the sum of the prefilling and decoding costs.
+    - Input and output throughput should be counted separately: processing input tokens (prefilling) and generating output tokens (decoding) have different computational bottlenecks and are often decoupled in modern inference servers.
+    - Smaller models and higher-end chips typically result in higher throughput.
+    - Workloads with consistent input and output lengths are easier to optimize than workloads with variable lengths.
+    - It’s better to compare the efficiency of inference servers using metrics such as cost per request.
+  - latency/throughput trade-off
+  - *Goodput* measures the number of requests per second that satisfies the SLO, software-level objective.
+- Utilization, MFU, and MBU
+  - GPU utilization
+    - MFU (Model FLOP/s Utilization): out of all the operations a machine is capable of computing, how many it’s doing in a given time.
+      - the ratio of the observed throughput (tokens/s) relative to the theoretical maximum throughput of a system operating at peak FLOP/s.
+    - MBU (Model Bandwidth Utilization): measures the percentage of achievable memory bandwidth used.
+    - Compute-bound workloads typically have higher MFU and lower MBU, while bandwidth-bound workloads often show lower MFU and higher MBU.
+  - The goal isn’t to get the chips with the highest utilization.
+    - What you really care about is how to get your jobs done faster and cheaper. A higher utilization rate means nothing if the cost and latency both increase.
+- AI Accelerators
 
-
-    
-
+**Inference Optimization**
+- Model Optimization
+  - Model compression
+    - quantization and distillation
+      - Weight-only quantization is by far the most popular approach since it’s easy to use, works out of the box for many models, and is extremely effective.
+    - Pruning
+      - to remove entire nodes of a neural network
+      - to find parameters least useful to predictions and set them to zero.
+      - Pruned models can be used as-is or be further finetuned to adjust the remaining parameters and restore any performance degradation caused by the pruning process.
+  - Overcoming the autoregressive decoding bottleneck
+    - Speculative decoding: uses a faster but less powerful model to generate a sequence of tokens.
+  - Inference with reference
+  - Parallel decoding
+  - Attention mechanism optimization
+    - A KV cache is used only during inference. KV caching is significantly more important for workloads with long contexts than those with short contexts. 
+- Inference Service Optimization
+  - Batching
+    - static batching
+    - dynamic batching: sets a maximum time window for each batch. 
+    - continuous batching: allows responses in a batch to be returned to users as soon as they are completed.
+    - <img width="648" alt="image" src="https://github.com/user-attachments/assets/fe79b4b5-57ac-4caf-9e38-ed047180bdbc" />
+  - Decoupling prefill and decode
+    - prefill is compute-bound and decode is memory bandwidth-bound.
+    - One common optimization technique for inference servers is to disaggregate prefill and decode.
+      - assigning prefill and decode operations to different instances (e.g., different GPUs) can significantly improve the volume of processed requests while adhering to latency requirements.
+  - Prompt caching
+    - A common overlapping text segment in different prompts is the system prompt.
+    - Prompt caching is useful for queries that involve long, overlapping prompt segments or multi-turn conversations.
+    - <img width="652" alt="image" src="https://github.com/user-attachments/assets/1bca192a-70a6-4ff0-8cbf-07332649537f" />
+  - Parallelism
+    - data parallelism and model parallelism
+      - Model parallelism refers to the practice of splitting the same model across multiple machines.
+        - tensor parallelism
+          - <img width="646" alt="image" src="https://github.com/user-attachments/assets/6cb453f7-96d4-4f73-b852-84024b3fdaad" />
+        - pipeline parallelism
+          - <img width="666" alt="image" src="https://github.com/user-attachments/assets/f317410b-dcc3-4cb3-8315-9578e7d22cce" />
+          - While pipeline parallelism enables serving large models on multiple machines, it increases the total latency for each request due to extra communication between pipeline stages.
+          - for applications with strict latency requirements, pipeline parallelism is typically avoided in favor of replica parallelism.
+          - However, pipeline parallelism is commonly used in training since it can help increase throughput.
+    - Replica parallelism: creates multiple replicas of the model you want to serve.
+      - More replicas allow you to handle more requests at the same time, potentially at the cost of using more chips.
+    - A family of strategies applied specifically for LLMs is context and sequence parallelism.
+      - Context parallelism: the input sequence itself is split across different devices to be processed separately.
+      - Sequence parallelism: operators needed for the entire input are split across machines.
  
+
 
 
 
