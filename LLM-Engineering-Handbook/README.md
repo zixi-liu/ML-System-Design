@@ -64,3 +64,6 @@ Listing the technical details of the LLM Twin architecture
   - Experiment tracking
   - Continuous training, continuous integration, and continuous delivery (CT/CI/CD)
   - Prompt and system monitoring
+
+LLM Twin high-level architecture
+- ![image](https://github.com/user-attachments/assets/0c850b65-9736-4845-b52d-18c7d0979302)
